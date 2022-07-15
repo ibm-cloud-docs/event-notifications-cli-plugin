@@ -2,7 +2,7 @@
 
 copyright:
   years: 2021, 2022
-lastupdated: "2022-07-09"
+lastupdated: "2022-07-15"
 
 keywords: event notifications CLI plug-in, CLI reference, en cli reference, event notifications cli reference, event notifications, command line reference
 
@@ -86,12 +86,6 @@ Check your configuration.
 ibmcloud event-notifications show
 ```
 {: pre}
-
-#### Command options
-{: #en-cli-show-options}
-
--- **Information missing for this section.**
-{: important}
 
 ## Destination
 {: #en-cli-destination}
