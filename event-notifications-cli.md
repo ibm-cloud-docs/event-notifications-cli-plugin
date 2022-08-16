@@ -2,7 +2,7 @@
 
 copyright:
   years: 2021, 2022
-lastupdated: "2022-07-15"
+lastupdated: "2022-08-16"
 
 keywords: event notifications CLI plug-in, CLI reference, en cli reference, event notifications cli reference, event notifications, command line reference
 
@@ -57,15 +57,27 @@ ibmcloud event-notifications init [--instance-id INSTANCE-ID]
 ### ibmcloud event-notifications environment variables set
 {: #en-cli-environment-variables}
 
-- export **IBMCLOUD_EN_ENDPOINT** variable to set the EN region endpoint.
+- export **IBMCLOUD_EN_ENDPOINT** variable to set the {{site.data.keyword.en_short}} region endpoint.
 
-   - **Dallas:** `https://us-south.event-notifications.cloud.ibm.com/event-notifications`
+   - **For public endpoints**:
 
-   - **London:** `https://eu-gb.event-notifications.cloud.ibm.com/event-notifications`
+      - **Dallas:** `https://us-south.event-notifications.cloud.ibm.com/event-notifications`
 
-   - **Sydney:** `https://au-syd.event-notifications.cloud.ibm.com/event-notifications`
+      - **London:** `https://eu-gb.event-notifications.cloud.ibm.com/event-notifications`
 
-   - **Frankfurt:** `https://eu-de.event-notifications.cloud.ibm.com/event-notifications`
+      - **Sydney:** `https://au-syd.event-notifications.cloud.ibm.com/event-notifications`
+
+      - **Frankfurt:** `https://eu-de.event-notifications.cloud.ibm.com/event-notifications`
+
+   - **For private endpoints**:
+
+      - **Dallas:** `https://private.us-south.event-notifications.cloud.ibm.com/event-notifications`
+
+      - **London:** `https://private.eu-gb.event-notifications.cloud.ibm.com/event-notifications`
+
+      - **Sydney:** `https://private.au-syd.event-notifications.cloud.ibm.com/event-notifications`
+
+      - **Frankfurt:** `https://private.eu-de.event-notifications.cloud.ibm.com/event-notifications`
 
 - export **EVENT_NOTIFICATIONS_API_KEY** variable to set the {{site.data.keyword.en_short}} instance `apikey`.
 
@@ -899,7 +911,7 @@ ibmcloud event-notifications subscription --help
 | icon | string | Specify the name of the icon to be displayed for the notification. Make sure that the icon is already packaged with the client application. |
 | delay_while_idle | Boolean | When set to true, this parameter indicates that the message should not be sent until the device becomes active. |
 | sync | Boolean | Device group messaging makes it possible for every app instance in a group to reflect the latest messaging state. |
-| visibility | string | private/public - Visibility of this notification, which affects how and when the notifications are revealed on a secure locked screen. |
+| visibility | string | private or public - Visibility of this notification, which affects how and when the notifications are revealed on a secure locked screen. |
 | redact | string | Content that is specified shows up on a secure locked screen on the device when visibility is set to Private. |
 | payload | JSON object | Custom JSON payload that is sent as part of the notification message.|
 | priority | string | A string value that indicates the priority of this notification. Allowed values are 'max', 'high', 'default', 'low' and 'min'. High/Max priority notifications along with 'sound' field might be used for Heads up notification in Android 5.0 or higher.sampleval='low'. |
