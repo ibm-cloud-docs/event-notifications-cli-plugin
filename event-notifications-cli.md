@@ -2,7 +2,7 @@
 
 copyright:
   years: 2021, 2022
-lastupdated: "2022-08-16"
+lastupdated: "2022-08-26"
 
 keywords: event notifications CLI plug-in, CLI reference, en cli reference, event notifications cli reference, event notifications, command line reference
 
@@ -57,27 +57,25 @@ ibmcloud event-notifications init [--instance-id INSTANCE-ID]
 ### ibmcloud event-notifications environment variables set
 {: #en-cli-environment-variables}
 
-- export **IBMCLOUD_EN_ENDPOINT** variable to set the {{site.data.keyword.en_short}} region endpoint.
+- export **IBMCLOUD_EN_ENDPOINT** variable to set the {{site.data.keyword.en_short}} region public endpoint.
 
-   - **For public endpoints**:
+   - **Dallas:** `https://us-south.event-notifications.cloud.ibm.com/event-notifications`
 
-      - **Dallas:** `https://us-south.event-notifications.cloud.ibm.com/event-notifications`
+   - **London:** `https://eu-gb.event-notifications.cloud.ibm.com/event-notifications`
 
-      - **London:** `https://eu-gb.event-notifications.cloud.ibm.com/event-notifications`
+   - **Sydney:** `https://au-syd.event-notifications.cloud.ibm.com/event-notifications`
 
-      - **Sydney:** `https://au-syd.event-notifications.cloud.ibm.com/event-notifications`
+   - **Frankfurt:** `https://eu-de.event-notifications.cloud.ibm.com/event-notifications`
 
-      - **Frankfurt:** `https://eu-de.event-notifications.cloud.ibm.com/event-notifications`
+- export **IBMCLOUD_EN_ENDPOINT** variable to set the {{site.data.keyword.en_short}} region private endpoint.
 
-   - **For private endpoints**:
+   - **Dallas:** `https://private.us-south.event-notifications.cloud.ibm.com/event-notifications`
 
-      - **Dallas:** `https://private.us-south.event-notifications.cloud.ibm.com/event-notifications`
+   - **London:** `https://private.eu-gb.event-notifications.cloud.ibm.com/event-notifications`
 
-      - **London:** `https://private.eu-gb.event-notifications.cloud.ibm.com/event-notifications`
+   - **Sydney:** `https://private.au-syd.event-notifications.cloud.ibm.com/event-notifications`
 
-      - **Sydney:** `https://private.au-syd.event-notifications.cloud.ibm.com/event-notifications`
-
-      - **Frankfurt:** `https://private.eu-de.event-notifications.cloud.ibm.com/event-notifications`
+   - **Frankfurt:** `https://private.eu-de.event-notifications.cloud.ibm.com/event-notifications`
 
 - export **EVENT_NOTIFICATIONS_API_KEY** variable to set the {{site.data.keyword.en_short}} instance `apikey`.
 
@@ -151,7 +149,7 @@ ibmcloud event-notifications destination --help
 
 - **Examples:**
 
-   - The following example shows format of the `DestinationConfig` object for iOS destination with P8 certificate:
+   - The following example shows format of the `DestinationConfig` object for iOS destination with P8 certificate. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*:
 
       ```json
       {
@@ -160,40 +158,44 @@ ibmcloud event-notifications destination --help
             "is_sandbox" : true,
             "key_id": "production",
             "team_id": "1234",
-            "bundle_id": "test1"
+            "bundle_id": "test1",
+            "pre_prod" : "true"
          }
       }
       ```
 
-   - The following example shows format of the `DestinationConfig` object for iOS destination with P12 certificate.
+   - The following example shows format of the `DestinationConfig` object for iOS destination with P12 certificate. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
 
       ```json
       {
          "params" : {
             "cert_type" : "p12",
             "is_sandbox" : true,
-            "password": "apnspasswordvalue"
+            "password": "apnspasswordvalue",
+            "pre_prod" : "true"
          }
       }
       ```
 
-   - The following example shows the format of the `DestinationConfig` object for Chrome destination.
+   - The following example shows the format of the `DestinationConfig` object for Chrome destination. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
 
       ```json
       {
          "params" : {
             "api_key": "chromeapikey",
-            "website_url" : "https://testwebsite.com"
+            "website_url" : "https://testwebsite.com",
+            "pre_prod" : "true"
          }
       }
       ```
 
-   - The following example shows format of the `DestinationConfig` object for Firefox destination.
+   - The following example shows format of the `DestinationConfig` object for Firefox destination. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
 
       ```json
       {
          "params" : {
-            "website_url" : "https://testwebsite.com"
+            "website_url" : "https://testwebsite.com",
+            "pre_prod" : "true"
          }
       }
       ```
@@ -208,7 +210,7 @@ ibmcloud event-notifications destination --help
       }
       ```
 
-   - The following example shows format of the `DestinationConfig` object for Safari destination.
+   - The following example shows format of the `DestinationConfig` object for Safari destination. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
 
       ```json
       {
@@ -219,7 +221,8 @@ ibmcloud event-notifications destination --help
             "url_format_string":"https://test.com",
             "website_name":"testwebsite",
             "website_push_id":"test",
-            "website_url":"https://test.com"
+            "website_url":"https://test.com",
+            "pre_prod" : "true"
          }
       }
       ```
@@ -232,7 +235,18 @@ ibmcloud event-notifications destination --help
             "url" : "https://xyz.webhook.office.com"
          }
       }
-      ```     
+      ```  
+
+   - The following example shows format of the `DestinationConfig` object for {{site.data.keyword.openwhisk}} destination.
+
+      ```json
+      {
+         "params" : {
+            "url" : "https://www.ibmcfendpoint.com",
+            "api_key": "cffunctionnamespaceserviceidapikey"
+         }
+      }
+      ```       
 
 ### ibmcloud event-notifications destination list
 {: #en-cli-destination-list-command}
@@ -744,9 +758,15 @@ ibmcloud event-notifications subscription --help
 - **Action:** Use below command to send notifications in **cli version 0.0.8**.
 
    ```sh
-   send-notifications --instance-id INSTANCE-ID [--body BODY] [--ce-ibmenseverity CE-IBMENSEVERITY] [--ce-ibmendefaultshort CE-IBMENDEFAULTSHORT] [--ce-ibmendefaultlong CE-IBMENDEFAULTLONG] [--ce-ibmenfcmbody CE-IBMENFCMBODY] [--ce-ibmenapnsbody CE-IBMENAPNSBODY] [--ce-ibmenpushto CE-IBMENPUSHTO] [--ce-ibmenapnsheaders CE-IBMENAPNSHEADERS] [--ce-ibmenchromebody CE-IBMENCHROMEBODY] [--ce-ibmensafaribody CE-IBMENSAFARIBODY] [--ce-ibmenfirefoxbody CE-IBMENFIREFOXBODY] [--ce-ibmenchromeheaders CE-IBMENCHROMEHEADERS] [--ce-ibmenfirefoxheaders CE-IBMENFIREFOXHEADERS] [--ce-ibmensourceid CE-IBMENSOURCEID] [--ce-id CE-ID] [--ce-source CE-SOURCE] [--ce-type CE-TYPE] [--ce-specversion CE-SPECVERSION] [--ce-time CE-TIME]
+    ibmcloud event-notifications send-notifications --instance-id INSTANCE-ID [--body BODY] [--ce-ibmenseverity CE-IBMENSEVERITY] [--ce-ibmendefaultshort CE-IBMENDEFAULTSHORT] [--ce-ibmendefaultlong CE-IBMENDEFAULTLONG] [--ce-ibmenfcmbody CE-IBMENFCMBODY] [--ce-ibmenapnsbody CE-IBMENAPNSBODY] [--ce-ibmenpushto CE-IBMENPUSHTO] [--ce-ibmenapnsheaders CE-IBMENAPNSHEADERS] [--ce-ibmenchromebody CE-IBMENCHROMEBODY] [--ce-ibmensafaribody CE-IBMENSAFARIBODY] [--ce-ibmenfirefoxbody CE-IBMENFIREFOXBODY] [--ce-ibmenchromeheaders CE-IBMENCHROMEHEADERS] [--ce-ibmenfirefoxheaders CE-IBMENFIREFOXHEADERS] [--ce-ibmensourceid CE-IBMENSOURCEID] [--ce-id CE-ID] [--ce-source CE-SOURCE] [--ce-type CE-TYPE] [--ce-specversion CE-SPECVERSION] [--ce-time CE-TIME]
    ```
    {: pre}
+
+- **Action:** Use below command to send notifications in **cli version 0.1.1**.   
+
+   ```sh
+    ibmcloud event-notifications send-notifications --instance-id INSTANCE-ID [--body BODY] 
+   ```
 
 - **Parameters to provide:**
 
@@ -876,6 +896,12 @@ ibmcloud event-notifications subscription --help
       ```json
       {"fcm_devices": ["deviceidstring"],"user_ids": ["useridstring"], "platforms": ["G"]}
       ```
+      
+   - The following example shows the send notification general payload for cli version above 0.1.1
+
+     ```json
+     ibmcloud en send-notifications --instance-id <instance-id> --body '{"id": "b2198eb8-04b1-48ec-a78c-ee87694dd845", "time": "2018-04-05T17:31:00Z","type": "*","subject": "This is a simple monitoring test alert!!","message_text": "Hi, Welcome from the IBM Cloud - Event Notifications service!", "message_subject": "This is a simple monitoring test alert!!","source": "apisource/git", "specversion": "1.0","ibmensourceid": "e9785d21-4780-467a-8836-c530f5v6738:api","data": {"alert": "En Proactive monitoring","message": "Hi, Welcome from the IBM Cloud - Event Notifications service"},"ibmenfcmbody": "{\"notification\": {\"title\": \"En Proactive monitoring test alert!\"}}","ibmenpushto": "{\"platforms\": [\"push_chrome\", \"push_firefox\", \"push_android\"]}","ibmenapnsbody": "{\"aps\": {\"alert\": \"En Proactive monitoring test alert!\"}}","ibmenchromebody": "{\"title\": \"En Proactive monitoring test alert!\"}","ibmenchromeheaders": "{\"TTL\": 3600}","ibmenfirefoxbody": "{\"title\": \"En Proactive monitoring test alert!\"}","ibmenfirefoxheaders": "{\"TTL\": 3600}","datacontenttype": "application/json","ibmendefaultlong": "Hi, we are making sure from our side that the service is available for consumption. If you are receiving this event, it means we doing fine. Thank you.","ibmendefaultshort": "This is a proactive monitoring test alert from IBM Cloud Event Notifications service."}'
+     ```   
 
 #### Additional properties that can be configured for the iOS notification
 {: #en-cli-send-notifications-command-addprops-ios}
