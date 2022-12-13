@@ -2,7 +2,6 @@ toc:
   properties:
     subcollection: event-notifications-cli-plugin
     service-name: en
-    catetory: devops
     audience: services
     href: /docs/event-notifications-cli-plugin/event-notifications-cli.html
     console-page: /catalog/services/event-notifications
