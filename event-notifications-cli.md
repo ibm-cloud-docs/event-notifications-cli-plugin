@@ -15,7 +15,7 @@ subcollection: event-notifications
 # {{site.data.keyword.en_short}} CLI
 {: #event-notifications-cli}
 
-The {{site.data.keyword.cloud_notm}} command-line interface (CLI) provides extra capabilities for service offerings. {{site.data.keyword.cloud_notm}} CLI supports a plug-in framework to extend its capability. You can install the {{site.data.keyword.en_short}} CLI plug-in from the {{site.data.keyword.cloud_notm}} plug-in repository. With the {{site.data.keyword.en_short}} service CLI plugin, you can easily manage {{site.data.keyword.en_short}} service instances by using the CLI commands available.
+The {{site.data.keyword.cloud_notm}} command-line interface (CLI) provides extra capabilities for service offerings. {{site.data.keyword.cloud_notm}} CLI supports a plug-in framework to extend its capability. You can install the {{site.data.keyword.en_short}} CLI plug-in from the {{site.data.keyword.cloud_notm}} plug-in repository. With the {{site.data.keyword.en_short}} service CLI plug-in, you can easily manage {{site.data.keyword.en_short}} service instances by using the CLI commands available.
 {: shortdesc}
 
 ## Prerequisites
@@ -47,7 +47,7 @@ ibmcloud plugin install en
 ### ibmcloud event-notifications init
 {: #en-cli-init-command}
 
-Set the instance you'll we working on by using the following command:
+Set the instance that you'll we working on by using the following command:
 
 ```sh
 ibmcloud event-notifications init [--instance-id INSTANCE-ID]
@@ -123,8 +123,8 @@ ibmcloud event-notifications source --help
 
       The default value is ``. The maximum length is `255` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*()]*/`.
 
-   `--enabled ENABLED` (boolean)
-   :  The boolean flag to enable or disable the source.
+   `--enabled ENABLED` (Boolean)
+   :  The Boolean flag to enable or disable the source.
 
       The value is set to true to enable the source and false to disable the source.
 
@@ -160,7 +160,7 @@ ibmcloud event-notifications source --help
 
       The default value is ``. The maximum length is `255` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*()]*/`.
 
-   `--enabled` (boolean)
+   `--enabled` (Boolean)
    :  Search string for filtering results.
 
       The value is set to true to enable the source and false to disable the source.
@@ -274,7 +274,7 @@ ibmcloud event-notifications destination --help
 ### ibmcloud event-notifications destination create
 {: #en-cli-destination-create}
 
-- **Action:** Create a new destination.
+- **Action:** Create a destination.
 
    ```sh
    ibmcloud event-notifications destination create --name NAME --type TYPE [--description DESCRIPTION] [--certificate CERTIFICATE] [--certificate-content-type CERTIFICATE-CONTENT-TYPE] [--config CONFIG] [--instance-id INSTANCE-ID]
@@ -305,7 +305,7 @@ ibmcloud event-notifications destination --help
    :  The certificate content type to be set in the case of iOS destination. The default value is ``. The available options are: p8 or p12.
 
    `--config CONFIG` ([`DestinationConfig` examples](#en-cli-destination-config-example-schema))
-   :  The configuration needed to set the destination specific parameters.
+   :  The configuration needed to set the destination-specific parameters.
 
    `--instance-id` (string)
    :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
@@ -329,7 +329,7 @@ ibmcloud event-notifications destination --help
 - **Examples:**
 {: #en-cli-destination-config-example-schema}
 
-   - The following example shows format of the `DestinationConfig` object for iOS destination with P8 certificate. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*:
+   - The following example shows format of the `DestinationConfig` object for iOS destination with P8 certificate. Set `pre_prod` Boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*:
 
       ```json
       {
@@ -339,12 +339,12 @@ ibmcloud event-notifications destination --help
             "key_id": "production",
             "team_id": "1234",
             "bundle_id": "test1",
-            "pre_prod" : "true" // Set to true in case of configuraing Destaination as pre prod Destination(pre_prod desatination can only be configured for Standard plan)
+            "pre_prod" : "true" // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
          }
       }
       ```
 
-   - The following example shows format of the `DestinationConfig` object for iOS destination with P12 certificate. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
+   - The following example shows format of the `DestinationConfig` object for iOS destination with P12 certificate. Set `pre_prod` Boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
 
       ```json
       {
@@ -352,30 +352,30 @@ ibmcloud event-notifications destination --help
             "cert_type" : "p12",
             "is_sandbox" : true,
             "password": "apnspasswordvalue",
-            "pre_prod" : "true" true // Set to true in case of configuraing Destaination as pre prod Destination(pre_prod desatination can only be configured for Standard plan)
+            "pre_prod" : "true" true // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
          }
       }
       ```
 
-   - The following example shows the format of the `DestinationConfig` object for Chrome destination. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
+   - The following example shows the format of the `DestinationConfig` object for Chrome destination. Set `pre_prod` Boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
 
       ```json
       {
          "params" : {
             "api_key": "chromeapikey",
             "website_url" : "https://testwebsite.com",
-            "pre_prod" : "true" true // Set to true in case of configuraing Destaination as pre prod Destination(pre_prod desatination can only be configured for Standard plan)
+            "pre_prod" : "true" true // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
          }
       }
       ```
 
-   - The following example shows format of the `DestinationConfig` object for Firefox destination. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
+   - The following example shows format of the `DestinationConfig` object for Firefox destination. Set `pre_prod` Boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
 
       ```json
       {
          "params" : {
             "website_url" : "https://testwebsite.com",
-            "pre_prod" : "true" // Set to true in case of configuraing Destaination as pre prod Destination(pre_prod desatination can only be configured for Standard plan)
+            "pre_prod" : "true" // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
          }
       }
       ```
@@ -390,7 +390,7 @@ ibmcloud event-notifications destination --help
       }
       ```
 
-   - The following example shows format of the `DestinationConfig` object for Safari destination. Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
+   - The following example shows format of the `DestinationConfig` object for Safari destination. Set `pre_prod` Boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
 
       ```json
       {
@@ -402,7 +402,7 @@ ibmcloud event-notifications destination --help
             "website_name":"testwebsite",
             "website_push_id":"test",
             "website_url":"https://test.com",
-            "pre_prod" : "true" // Set to true in case of configuraing Destaination as pre prod Destination(pre_prod desatination can only be configured for Standard plan)
+            "pre_prod" : "true" // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
          }
       }
       ```
@@ -459,7 +459,7 @@ ibmcloud event-notifications destination --help
          "params" : {
          "sender_id" : "sender_ID",
          "server_key" : "Server_key",
-         "pre_prod" : true // Set to true in case of configuraing Destaination as pre prod Destination(pre_prod desatination can only be configured for Standard plan)
+         "pre_prod" : true // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
          }
       }
       ```
@@ -549,7 +549,7 @@ ibmcloud event-notifications destination --help
    :  The certificate file path to be provided. The allowed file type is p8 and p12 certificate.
 
    `--config CONFIG` ([`DestinationConfig` examples](#en-cli-destination-config-example-schema))
-   :  The configuration needed to set the destination specific parameters.
+   :  The configuration needed to set the destination-specific parameters.
 
    `--instance-id`
    :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
@@ -579,7 +579,7 @@ ibmcloud event-notifications destination --help
 
       The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-   `[--force]` (boolean)
+   `[--force]` (Boolean)
    :  Activate to force resource deletion (to bypass the confirmation prompt).
 
 ## Topics
@@ -737,7 +737,7 @@ ibmcloud event-notifications topic --help
       The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
    `--id` (string)
-   :  Unique identifier for Topic. Required.
+   :  Unique identifier for topic. Required.
 
       The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
 
@@ -776,7 +776,7 @@ ibmcloud event-notifications topic --help
 
       The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-   `[--force]` (boolean)
+   `[--force]` (Boolean)
    :  Activate to force resource deletion (to bypass the confirmation prompt).
 
 ## Subscriptions
@@ -954,7 +954,7 @@ ibmcloud event-notifications subscription --help
 
       The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-   `[--force]` (boolean)
+   `[--force]` (Boolean)
    :  Activate to force resource deletion (to bypass the confirmation prompt).
 
 ### ibmcloud event-notifications subscription update
@@ -1100,10 +1100,10 @@ ibmcloud event-notifications Integration get --id ID [--instance-id INSTANCE-ID]
 
    The maximum length is `100` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z0-9-:_]*/`.
 
-## Send Notifications
+## Send notifications
 {: #en-cli-send-notifications}
 
-### ibmcloud event-notifications Send Notifications
+### ibmcloud event-notifications Send notifications
 {: #en-cli-send-notifications-command}
 
 - **Action:** Use below command to send notifications in **cli version 0.0.7**.
@@ -1169,7 +1169,7 @@ ibmcloud event-notifications Integration get --id ID [--instance-id INSTANCE-ID]
       The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/`.
 
    `[--datacontenttype DATACONTENTTYPE]` (string)
-   :  The datacontent type for notification. Required.
+   :  The data content type for notification. Required.
 
       The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/`. Default value is application/json.
 
@@ -1179,16 +1179,16 @@ ibmcloud event-notifications Integration get --id ID [--instance-id INSTANCE-ID]
       The minimum length is `1` character. The value must match regular expression `/[0-9]`. Default value is 1.0.
 
    `[--push-to PUSH-TO]` or `[--ce-ibmenpushto CE-IBMENPUSHTO]` [DeviceDataConfiguration](#en-cli-send-notification-example-schema)
-   :  The Device data information to send data in case of Registered Devices / Usersids / Platforms. For broadcast choose {}.
+   :  The Device data information to send data in case of Registered Devices / Users IDs / Platforms. For broadcast, choose {}.
 
    `[--message-fcm-body MESSAGE-FCM-BODY]` or `[--ce-ibmenfcmbody CE-IBMENFCMBODY]` [FCMMessageBodyDataPayload](#en-cli-send-notification-example-schema)
    :  FCM message body to send notification to FCM devices.
 
    `[--message-apns-headers MESSAGE-APNS-HEADERS]` or `[--ce-ibmenapnsheaders CE-IBMENAPNSHEADERS]` [APNSHeaders#en-cli-send-notification-example-schema)
-   :  The Custom APNS headers information can be set using this option.
+   :  The Custom APNS headers information can be set by using this option.
 
    `[--message-apns-body MESSAGE-APNS-BODY]` or `[--ce-ibmenapnsbody CE-IBMENAPNSBODY]` [APNSMessageBody](#en-cli-send-notification-example-schema)
-   :  The apns meaage body can be set using this option.
+   :  The apns message body can be set by using this option.
 
    `[--body BODY]` [DataPayload](#en-cli-send-notification-example-schema))
    :  The body payload to be provided for notification.
@@ -1199,7 +1199,7 @@ ibmcloud event-notifications Integration get --id ID [--instance-id INSTANCE-ID]
       The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_/.?:'\";,+=!#@$%^&*() ]*/`.
 
    `[--ce-ibmendefaultlong CE-IBMENDEFAULTLONG]` (string)
-   :  The long text for notification top send.
+   :  The long text for notification top sends.
 
       The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_/.?:'\";,+=!#@$%^&*() ]*/`.
 
@@ -1213,10 +1213,10 @@ ibmcloud event-notifications Integration get --id ID [--instance-id INSTANCE-ID]
    :  Firefox message body to send notification to FCM devices.
 
    `[--ce-ibmenchromeheaders CE-IBMENCHROMEHEADERS]` [ChromeHeaders](#en-cli-send-notification-example-schema)
-   :  The Custom Chrome headers information can be set using this option.
+   :  The Custom Chrome headers information can be set by using this option.
 
    `[--ce-ibmenfirefoxheaders CE-IBMENFIREFOXHEADERS]` [FirefoxHeaders](#en-cli-send-notification-example-schema)
-   :  The Custom Firefox information can be set using this option.
+   :  The Custom Firefox information can be set by using this option.
 
 - **Examples:**
 {: #en-cli-send-notification-example-schema}
@@ -1303,11 +1303,11 @@ ibmcloud event-notifications Integration get --id ID [--instance-id INSTANCE-ID]
 | `sound` | string | The name of the sound file in the application bundle. The sound of this file is played as an alert. |
 | `title_loc_key` | string | The key to a title string in the Localizable.strings file for the current localization. The key string can be formatted with %@ and %n$@ specifiers to take the variables specified in the titleLocArgs array. |
 | `loc_key` | string | A key to an alert-message string in a Localizabl.strings file for the current localization (which is set by the user's language preference). The key string can be formatted with %@ and %n$@ specifiers to take the variables specified in the locArgs array. |
-| `launch_image` | string | The filename of an image file in the app bundle, with or without the filename extension. The image is used as the launch image when users tap the action button or move the action slider. |
+| `launch_image` | string | The file name of an image file in the app bundle, with or without the file name extension. The image is used as the launch image when users tap the action button or move the action slider. |
 | `title_loc_args` | string | Variable string values to appear in place of the format specifiers in title-loc-key. |
 | `loc_args` | string | Variable string values to appear in place of the format specifiers in locKey. | title string The title of Rich Push notifications (Supported only on iOS 10 and above).|
 | `title` | string | The title of Rich Push notifications (Supported only on iOS 10 and above). |
-| `subtitle` | string | The subtitle of the Rich Notifications (Supported only on iOS 10 and above). |
+| `subtitle` | string | The subtitle of the Rich notifications (Supported only on iOS 10 and above). |
 | `body` | string | The body for IOS notifications. |
 | `attachment_url` | string | The link to the iOS notifications media (video, audio, GIF, images - Supported only on iOS 10 and above). |
 | `type` | string | Allowable values: DEFAULT, MIXED, SILENT. |
