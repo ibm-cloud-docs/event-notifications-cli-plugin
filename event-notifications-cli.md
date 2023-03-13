@@ -1,8 +1,8 @@
 ---
 
 copyright:
-  years: 2021, 2022
-lastupdated: "2022-12-12"
+  years: 2021, 2023
+lastupdated: "2023-03-13"
 
 keywords: event notifications CLI plug-in, CLI reference, en cli reference, event notifications cli reference, event notifications, command line reference
 
@@ -113,6 +113,11 @@ ibmcloud event-notifications source --help
 
 - **Parameters to provide:**
 
+   `[--instance-id INSTANCE-ID]` (string)
+   :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
    `--name NAME` (int64)
    :  The name to be provided for API source.
 
@@ -127,11 +132,6 @@ ibmcloud event-notifications source --help
    :  The Boolean flag to enable or disable the source.
 
       The value is set to true to enable the source and false to disable the source.
-
-   `[--instance-id INSTANCE-ID]` (string)
-   :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
-
-      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
 ### ibmcloud event-notifications source update
 {: #en-cli-source-update-command}
@@ -283,6 +283,11 @@ ibmcloud event-notifications destination --help
 
 - **Parameters to provide:**
 
+   `--instance-id` (string)
+   :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
    `--name NAME` (string)
    :  The name of the destination. Required.
 
@@ -306,11 +311,6 @@ ibmcloud event-notifications destination --help
 
    `--config CONFIG` ([`DestinationConfig` examples](#en-cli-destination-config-example-schema))
    :  The configuration needed to set the destination-specific parameters.
-
-   `--instance-id` (string)
-   :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
-
-      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
    `--config`
    :  For webhook destinations only.
@@ -457,9 +457,24 @@ ibmcloud event-notifications destination --help
       ```json
       {
          "params" : {
-         "sender_id" : "sender_ID",
-         "server_key" : "Server_key",
+         "project_id" : "6232305230320",
+         "private_key" : "36e21epfweort823or8rt832pr8p2r832pr82pr382r8f",
+         "client_email" : "testuser.123@gmail.com",
          "pre_prod" : true // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
+         }
+      }
+      ```
+
+   - The following example shows the format of the `DestinationConfig` object for ServiceNow destination.
+
+      ```json
+      {
+         "params" : {
+         "client_id" : "359705ceddd100eyfewyyw1f0f9e1c96",
+         "client_secret": "testsecrets",
+         "username": "testuser",
+         "password": "user_password",
+         "instance_name": "testinstancenje"
          }
       }
       ```
