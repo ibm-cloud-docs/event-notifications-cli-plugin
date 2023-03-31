@@ -2,7 +2,7 @@
 
 copyright:
   years: 2021, 2023
-lastupdated: "2023-03-13"
+lastupdated: "2023-03-31"
 
 keywords: event notifications CLI plug-in, CLI reference, en cli reference, event notifications cli reference, event notifications, command line reference
 
@@ -444,10 +444,10 @@ ibmcloud event-notifications destination --help
       ```json
       {
          "params" : {
-         "url" : "exampleString",
-         "verb" : "get",
-         "custom_headers" : { },
-         "sensitive_headers" : [ "exampleString" ]
+            "url" : "exampleString",
+            "verb" : "get",
+            "custom_headers" : { },
+            "sensitive_headers" : [ "exampleString" ]
          }
       }
       ```
@@ -457,10 +457,10 @@ ibmcloud event-notifications destination --help
       ```json
       {
          "params" : {
-         "project_id" : "6232305230320",
-         "private_key" : "36e21epfweort823or8rt832pr8p2r832pr82pr382r8f",
-         "client_email" : "testuser.123@gmail.com",
-         "pre_prod" : true // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
+            "project_id" : "6232305230320",
+            "private_key" : "36e21epfweort823or8rt832pr8p2r832pr82pr382r8f",
+            "client_email" : "testuser.123@gmail.com",
+            "pre_prod" : true // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
          }
       }
       ```
@@ -470,11 +470,24 @@ ibmcloud event-notifications destination --help
       ```json
       {
          "params" : {
-         "client_id" : "359705ceddd100eyfewyyw1f0f9e1c96",
-         "client_secret": "testsecrets",
-         "username": "testuser",
-         "password": "user_password",
-         "instance_name": "testinstancenje"
+            "client_id" : "359705ceddd100eyfewyyw1f0f9e1c96",
+            "client_secret": "testsecrets",
+            "username": "testuser",
+            "password": "user_password",
+            "instance_name": "testinstancenje"
+         }
+      }
+      ```
+
+   - The following example shows the format of the `DestinationConfig` object for Code Engine destination.
+
+      ```json
+      {
+         "params" : {
+            "url" : "https://codeengine.test.com",
+            "verb" : "get",
+            "custom_headers" : { },
+            "sensitive_headers" : [ "exampleString" ]
          }
       }
       ```
