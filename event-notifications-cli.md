@@ -2,7 +2,7 @@
 
 copyright:
   years: 2021, 2023
-lastupdated: "2023-03-31"
+lastupdated: "2023-04-25"
 
 keywords: event notifications CLI plug-in, CLI reference, en cli reference, event notifications cli reference, event notifications, command line reference
 
@@ -488,6 +488,18 @@ ibmcloud event-notifications destination --help
             "verb" : "get",
             "custom_headers" : { },
             "sensitive_headers" : [ "exampleString" ]
+         }
+      }
+      ```
+
+   - The following example shows the format of the `DestinationConfig` object for {{site.data.keyword.cos_full_notm}} destination.
+
+      ```json
+      {
+         "params" : {
+            "bucket_name" : "cos-destination-en-bucket",
+            "instance_id" : "42e13636e-0548-41a0-a178-e95be28464773",
+            "endpoint" : "https://s3.us-west.cloud-object-storage.test.appdomain.cloud"
          }
       }
       ```
