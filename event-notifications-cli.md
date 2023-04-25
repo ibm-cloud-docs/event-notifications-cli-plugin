@@ -499,7 +499,7 @@ ibmcloud event-notifications destination --help
          "params" : {
             "bucket_name" : "cos-destination-en-bucket",
             "instance_id" : "42e13636e-0548-41a0-a178-e95be28464773",
-            "endpoint" : "https://s3.us-west.cloud-object-storage.test.appdomain.cloud"
+            "endpoint" : "https://s3.us-west.cloud-object-storage.appdomain.cloud"
          }
       }
       ```
