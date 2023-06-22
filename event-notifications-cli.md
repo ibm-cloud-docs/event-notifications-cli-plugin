@@ -2,7 +2,7 @@
 
 copyright:
   years: 2021, 2023
-lastupdated: "2023-04-25"
+lastupdated: "2023-06-21"
 
 keywords: event notifications CLI plug-in, CLI reference, en cli reference, event notifications cli reference, event notifications, command line reference
 
@@ -97,7 +97,7 @@ ibmcloud event-notifications show
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} source.
 
 ```sh
-ibmcloud event-notifications source --help
+ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
 ```
 {: pre}
 
@@ -106,8 +106,13 @@ ibmcloud event-notifications source --help
 
 - **Action:** Create `Source`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications source create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications sources-create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
    ```
    {: pre}
 
@@ -137,9 +142,14 @@ ibmcloud event-notifications source --help
 {: #en-cli-source-update-command}
 
 - **Action:** Update `Source`.
-
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications source update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--enabled ENABLED]
+   ```
+
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications ssource-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--enabled ENABLED]
    ```
    {: pre}
 
@@ -174,9 +184,14 @@ ibmcloud event-notifications source --help
 {: #en-cli-source-list-command}
 
 - **Action:** List all `Source`.
-
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications source list [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
+   ```
+
+   [ Onwards version 1.0.0 ]   
+   ```sh
+   ibmcloud event-notifications sources [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -209,9 +224,14 @@ ibmcloud event-notifications source --help
 {: #en-cli-source-get-command}
 
 - **Action:** Get specific `Source`.
-
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications source get --id ID [--instance-id INSTANCE-ID]
+   ```
+
+   [ Onward version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications source --id ID [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -241,8 +261,13 @@ ibmcloud event-notifications source --help
 
 - **Action:** Delete specific `Source`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications source delete --instance-id INSTANCE-ID --id ID
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications source-delete  --instance-id INSTANCE-ID --id ID
    ```
    {: pre}
 
@@ -267,7 +292,7 @@ ibmcloud event-notifications source --help
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} destination.
 
 ```sh
-ibmcloud event-notifications destination --help
+ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 ```
 {: pre}
 
@@ -275,9 +300,13 @@ ibmcloud event-notifications destination --help
 {: #en-cli-destination-create}
 
 - **Action:** Create a destination.
-
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications destination create --name NAME --type TYPE [--description DESCRIPTION] [--certificate CERTIFICATE] [--certificate-content-type CERTIFICATE-CONTENT-TYPE] [--config CONFIG] [--instance-id INSTANCE-ID]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications destination-create --name NAME --type TYPE [--description DESCRIPTION] [--certificate CERTIFICATE] [--certificate-content-type CERTIFICATE-CONTENT-TYPE] [--config CONFIG] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -504,13 +533,31 @@ ibmcloud event-notifications destination --help
       }
       ```
 
+   - The following example shows the format of the `DestinationConfig` object for Huawei destination.
+
+      ```json
+      {
+         "params" : {
+            "client_id" : "359705ceddd100eyfew",
+            "client_secret": "testsecrets",
+            "pre_prod" : true // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
+         }
+      }
+      ```   
+
 ### ibmcloud event-notifications destination list
 {: #en-cli-destination-list-command}
 
 - **Action:** List all `Destination`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications destination list [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
+   ```
+
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications destinations [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -541,8 +588,13 @@ ibmcloud event-notifications destination --help
 
 - **Action:** Get specific `Destination`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications destination get --id ID [--instance-id INSTANCE-ID]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications destination --id ID [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -563,8 +615,13 @@ ibmcloud event-notifications destination --help
 
 - **Action:** Update existing `Destination`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications destination update --id ID [--name NAME] [--description DESCRIPTION] [--certificate CERTIFICATE] [--config CONFIG] [--instance-id INSTANCE-ID]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications destination-update --id ID [--name NAME] [--description DESCRIPTION] [--certificate CERTIFICATE] [--config CONFIG] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -601,8 +658,13 @@ ibmcloud event-notifications destination --help
 
 - **Action:** Delete existing `Destination`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications destination delete --id ID [--instance-id INSTANCE-ID] [--force]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications destination-delete --id ID [--instance-id INSTANCE-ID] [--force]
    ```
    {: pre}
 
@@ -628,7 +690,7 @@ ibmcloud event-notifications destination --help
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} topic.
 
 ```sh
-ibmcloud event-notifications topic --help
+ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
 ```
 {: pre}
 
@@ -636,9 +698,14 @@ ibmcloud event-notifications topic --help
 {: #en-cli-topic-create-command}
 
 - **Action:** Create new `Topic`.
-
+   
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications topic create --name NAME [--description DESCRIPTION] [--sources SOURCES] [--instance-id INSTANCE-ID]
+   ```
+   [ SOnwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications topic-create --name NAME [--description DESCRIPTION] [--sources SOURCES] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -704,9 +771,14 @@ ibmcloud event-notifications topic --help
 {: #en-cli-topic-list-command}
 
 - **Action:** List all `Topic`.
-
+   
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications topic list [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications topics [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -737,8 +809,13 @@ ibmcloud event-notifications topic --help
 
 - **Action:** Get specific `Topic`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications topic get --id ID [--include INCLUDE] [--instance-id INSTANCE-ID]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications topic --id ID [--include INCLUDE] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -764,8 +841,13 @@ ibmcloud event-notifications topic --help
 
 - **Action:** Update existing `Topic`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications topic update --id ID [--name NAME] [--description DESCRIPTION] [--sources SOURCES] [--instance-id INSTANCE-ID]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications topic-replace --id ID [--name NAME] [--description DESCRIPTION] [--sources SOURCES] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -799,8 +881,13 @@ ibmcloud event-notifications topic --help
 
 - **Action:** Delete existing `Topic`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications topic delete --id ID [--instance-id INSTANCE-ID] [--force]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications topic-delete --id ID [--instance-id INSTANCE-ID] [--force]
    ```
    {: pre}
 
@@ -825,7 +912,7 @@ ibmcloud event-notifications topic --help
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} subscription.
 
 ```sh
-ibmcloud event-notifications subscription --help
+ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 ]
 ```
 {: pre}
 
@@ -833,9 +920,14 @@ ibmcloud event-notifications subscription --help
 {: #en-cli-subscription-create-command}
 
 - **Action:** Create new `Subscription`.
-
+   
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications subscription create [--name NAME] [--description DESCRIPTION] [--destination-id DESTINATION-ID] [--topic-id TOPIC-ID] [--attributes ATTRIBUTES] [--instance-id INSTANCE-ID]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications subscription-create [--name NAME] [--description DESCRIPTION] [--destination-id DESTINATION-ID] [--topic-id TOPIC-ID] [--attributes ATTRIBUTES] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -923,8 +1015,13 @@ ibmcloud event-notifications subscription --help
 
 - **Action:** List all `Subscription`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications subscription list [--offset OFFSET] [--limit LIMIT] [--search SEARCH] [--instance-id INSTANCE-ID]
+   ```
+    [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications subscriptions [--offset OFFSET] [--limit LIMIT] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -948,15 +1045,20 @@ ibmcloud event-notifications subscription --help
    `[--instance-id INSTANCE-ID]`  (string)
    :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
 
-      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.      
 
 ### ibmcloud event-notifications subscription get
 {: #en-cli-subscription-get-command}
 
 - **Action:** Get specific `Subscription`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications subscription get --id ID [--instance-id INSTANCE-ID]
+   ```
+    [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications subscription --id ID [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -977,8 +1079,14 @@ ibmcloud event-notifications subscription --help
 
 - **Action:** Delete existing `Subscription`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications subscription delete --id ID [--instance-id INSTANCE-ID] [--force]
+   ```
+
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications subscription-delete --id ID [--instance-id INSTANCE-ID] [--force]
    ```
    {: pre}
 
@@ -1002,8 +1110,13 @@ ibmcloud event-notifications subscription --help
 
 - **Action:** Update existing `Subscription`.
 
+   [ Supported till version 0.2.0 ]
    ```sh
    ibmcloud event-notifications subscription update --id ID [--name NAME] [--description DESCRIPTION] [--attributes ATTRIBUTES] [--instance-id INSTANCE-ID]
+   ```
+   [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications subscription-update --id ID [--name NAME] [--description DESCRIPTION] [--attributes ATTRIBUTES] [--instance-id INSTANCE-ID]
    ```
    {: pre}
 
@@ -1032,13 +1145,132 @@ ibmcloud event-notifications subscription --help
    `[-attributes ATTRIBUTES]` ([SubscriptionUpdateAttributes](#en-cli-subscription-example-schema))
    :  The attributes to be set for subscription
 
+### ibmcloud event-notifications tag subscription create
+{: #en-cli-tag-subscription-create-command}
+
+- **Action:** Create `Tag-Subscription`.
+
+    [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications tags-subscription-create --instance-id INSTANCE-ID --id ID --device-id DEVICE-ID --tag-name TAG-NAME
+   ```
+   {: pre}
+
+- **Parameters to provide:**
+
+   `--id ID` (string)
+   :  Unique identifier for Destination. Required.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+   `--tag-name TAG-NAME` (string)
+   :  The offset for paginated results.
+
+      The default value is ` `. The maximum length is `255` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+   `----device-id DEVICE-ID` (string)
+   :  Unique identifier of the device.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+   `[--instance-id INSTANCE-ID]`  (string)
+   :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+### ibmcloud event-notifications tag subscription delete
+{: #en-cli-tag-subscription-delete-command}
+
+- **Action:** Delete `Tag-Subscription`.
+
+    [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications tags-subscription-delete --instance-id INSTANCE-ID --id ID --device-id DEVICE-ID --tag-name TAG-NAME
+   ```
+   {: pre}
+
+- **Parameters to provide:**
+
+   `--id ID` (string)
+   :  Unique identifier for Destination. Required.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+   `--tag-name TAG-NAME` (string)
+   :  The offset for paginated results.
+
+      The default value is ` `. The maximum length is `255` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+   `----device-id DEVICE-ID` (string)
+   :  Unique identifier of the device.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+   `[--instance-id INSTANCE-ID]`  (string)
+   :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.  
+
+### ibmcloud event-notifications tag subscription list
+{: #en-cli-tag-subscription-list-command}
+
+- **Action:** list `Tag-Subscriptions`.
+
+    [ Onwards version 1.0.0 ]
+   ```sh
+   ibmcloud event-notifications tags-subscription --instance-id INSTANCE-ID --id ID [--device-id DEVICE-ID] [--user-id USER-ID] [--tag-name TAG-NAME] [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
+   ```
+   {: pre}
+
+- **Parameters to provide:**
+
+   `--id ID` (string)
+   :  Subscription Tag ID. Required.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+   `--tag-name TAG-NAME` (string)
+   :  The offset for paginated results.
+
+      The default value is ` `. The maximum length is `255` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+   `----device-id DEVICE-ID` (string)
+   :  Unique identifier of the device.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+   `----user-id USER-ID` (string)
+   :  The user identifier for the device registration.
+
+      The default value is ` `. The maximum length is `255` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.   
+
+   `--limit LIMIT` (int64)
+   :  The page limit for paginated results.
+
+      The maximum value is `100`. The minimum value is `1`.
+
+   `--offset OFFSET` (int64)
+   :  The offset for paginated results.
+
+      The minimum value is `0`.
+
+   `--search SEARCH` (string)
+   :  The search string for filtering results.
+
+      The maximum length is `100` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z0-9]/`.   
+
+   `[--instance-id INSTANCE-ID]`  (string)
+   :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
+
+      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.             
+
 ## Integrations
 {: #en-cli-integration}
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} integration.
 
 ```sh
-ibmcloud event-notifications Integration --help
+ibmcloud event-notifications Integration --help [ Supported till version 0.2.0 ]
 ```
 
 ### ibmcloud event-notifications integration replace
@@ -1046,8 +1278,13 @@ ibmcloud event-notifications Integration --help
 
 Replace `Integration`.
 
+[ Supported till version 0.2.0 ]
 ```sh
 ibmcloud event-notifications Integration replace --instance-id INSTANCE-ID --id ID --type Type --metadata METADATA
+```
+[ Onwards version 1.0.0]
+```sh
+ibmcloud event-notifications integration-replace --instance-id INSTANCE-ID --id ID --type Type --metadata METADATA
 ```
 
 #### Command options
@@ -1091,8 +1328,14 @@ ibmcloud event-notifications Integration replace --instance-id INSTANCE-ID --id 
 
 List all `Integrations`.
 
+[ Supported till version 0.2.0 ]
 ```sh
 ibmcloud event-notifications Integration list [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
+```
+
+[ SOnwards version 1.0.0 ]
+```sh
+ibmcloud event-notifications integrations [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
 ```
 
 #### Command options
@@ -1123,8 +1366,14 @@ ibmcloud event-notifications Integration list [--limit LIMIT] [--offset OFFSET] 
 
 Get specific `Integration`.
 
+[ Supported till version 0.2.0 ]
 ```sh
 ibmcloud event-notifications Integration get --id ID [--instance-id INSTANCE-ID]
+```
+
+[ Onwards version 1.0.0 ]
+```sh
+ibmcloud event-notifications Integration --id ID [--instance-id INSTANCE-ID]
 ```
 
 #### Command options
