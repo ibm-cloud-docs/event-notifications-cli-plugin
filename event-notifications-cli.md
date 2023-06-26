@@ -112,7 +112,7 @@ ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
    ```
    [ Onwards version 1.0.0 ]
    ```sh
-   ibmcloud event-notifications sources-create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
+   ibmcloud event-notifications source-create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
    ```
    {: pre}
 
@@ -149,7 +149,7 @@ ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
 
    [ Onwards version 1.0.0 ]
    ```sh
-   ibmcloud event-notifications ssource-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--enabled ENABLED]
+   ibmcloud event-notifications source-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--enabled ENABLED]
    ```
    {: pre}
 
@@ -1373,7 +1373,7 @@ ibmcloud event-notifications Integration get --id ID [--instance-id INSTANCE-ID]
 
 [ Onwards version 1.0.0 ]
 ```sh
-ibmcloud event-notifications Integration --id ID [--instance-id INSTANCE-ID]
+ibmcloud event-notifications integration --id ID [--instance-id INSTANCE-ID]
 ```
 
 #### Command options
