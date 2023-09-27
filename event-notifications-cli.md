@@ -547,6 +547,8 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 
       - The following example shows the format of the `DestinationConfig` object for Custom Email destination.
 
+      Process To do the Custom Domain Configuration and Verification: https://cloud.ibm.com/docs/event-notifications?topic=event-notifications-en-destinations-custom-email#en-destinations-custom-email-verify
+
       ```json
       {
          "params" : {
@@ -554,6 +556,7 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
          }
       }
       ```  
+     
 
 ### ibmcloud event-notifications destination list
 {: #en-cli-destination-list-command}
@@ -1045,7 +1048,7 @@ NOTE: The options which are mentioned as **Mutually exclusive with the 'attribut
 
       ```json
       {
-         "invited" :["+19667895490", "+19845678321"]
+         "invited" :["+1xxxxxxxxxx", "+1xxxxxxxxxx"]
       }
       ```
 
@@ -1314,14 +1317,14 @@ NOTE: The options which are mentioned as **Mutually exclusive with the 'attribut
       ```json
       {
          "invited": {
-            "add": ["+89121912010"],
-            "remove": ["+1219112981981", "+91210910232312"]
+            "add": ["+8xxxxxxxxxx"],
+            "remove": ["+1xxxxxxxxxx", "+91xxxxxxxxxx"]
          },
          "subscribed": {
-            "remove": ["+1219112981983", "+91210910232314"]
+            "remove": ["+1xxxxxxxxxx", "+91xxxxxxxxxx"]
          },
          "unsubscribed": {
-            "remove": ["+1219112981983", "+91210910232314"]
+            "remove": ["+1xxxxxxxxxx", "+91xxxxxxxxxx"]
          }
       }
       ```
