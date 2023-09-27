@@ -543,7 +543,20 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
             "pre_prod" : true // Set to true in case of configuring Destination as pre-prod Destination (pre_prod destination can only be configured for Standard plan)
          }
       }
-      ```   
+      ```  
+
+      - The following example shows the format of the `DestinationConfig` object for Custom Email destination.
+
+      Process To do the Custom Domain Configuration and Verification: https://cloud.ibm.com/docs/event-notifications?topic=event-notifications-en-destinations-custom-email#en-destinations-custom-email-verify
+
+      ```json
+      {
+         "params" : {
+            "domain": "mailx.com"
+         }
+      }
+      ```  
+     
 
 ### ibmcloud event-notifications destination list
 {: #en-cli-destination-list-command}
@@ -927,7 +940,7 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
    ```
    [ Onwards version 1.0.0 ]
    ```sh
-   ibmcloud event-notifications subscription-create [--name NAME] [--description DESCRIPTION] [--destination-id DESTINATION-ID] [--topic-id TOPIC-ID] [--attributes ATTRIBUTES] [--instance-id INSTANCE-ID]
+   ibmcloud event-notifications subscription-create --name NAME --description DESCRIPTION --destination-id DESTINATION-ID --topic-id TOPIC-ID --attributes ATTRIBUTES --attributes-add-notification-payload ADDNOTIFICATIONPAYLOADFLAG --attributes-assigned-to ServiceNowAssignee --attributes-assignment-group ServiceNowIncidentGroup  --attributes-from-email FROMEMAIL --attributes-from-name FROMNAME  -attributes-invited ATTRIBUTESINVITED --attributes-reply-to-mail REPLYTO --attributes-reply-to-name REPLYTONAME --attributes-signing-enabled SIGNINGENABLED --attributes-template-id-invitation INVITATIONTEMPLATEID --attributes-template-id-notification TEMPLATEIDNOTIFICATION --instance-id INSTANCE-ID 
    ```
    {: pre}
 
@@ -938,33 +951,91 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
       The maximum length is `50` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
 
-   `[--instance-id INSTANCE-ID]` (string)
+   `--instance-id INSTANCE-ID` (string)
    :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
 
       The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-   `[--description DESCRIPTION]` (string)
+   `--description DESCRIPTION` (string)
    :  The description to be set for subscription.
 
       The default value is ``. The maximum length is `255` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
 
-   `[--destination-id DESTINATION-ID]` (string)
+   `--destination-id DESTINATION-ID` (string)
    :  The destination ID to be set for subscription.
 
       The maximum length is `150` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
 
-   `[--topic-id TOPIC-ID]` (string)
+   `--topic-id TOPIC-ID` (string)
    :  The topic ID to be set for subscription.
 
       The maximum length is `150` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
 
-   `[-attributes ATTRIBUTES]` ([SubscriptionCreateAttributes](#en-cli-subscription-example-schema))
+   `--attributes-add-notification-payload ADDNOTIFICATIONPAYLOADFLAG` (boolean)
+   :  Whether to add the notification payload to the email.
+
+      Default value is set to false.  Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-assigned-to ServiceNowAssignee` (string)
+   :  Name of user ServiceNow incident will be assigned to.
+
+      The maximum length is `150` characters. The minimum length is `3` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-assignment-group ServiceNowIncidentGroup` (string)
+   :  Group Name to which incident will be assigned to.
+
+      The maximum length is `150` characters. The minimum length is `3` characters. The value must match regular expression `.*`.  Mutually exclusive with the 'attributes' flag.
+
+    `--attributes-from-email FROMEMAIL` (string)
+   :  The email adress from where it is sourced.
+
+      The maximum length is `255` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`. Mutually exclusive with the 'attributes' flag.   
+
+   `--attributes-from-name FROMNAME` (string)
+   :  The email username from where it is sourced.
+
+      The maximum length is `150` characters. The minimum length is `1` characters. The value must match regular expression `[a-zA-Z0-9-:_]*`.  Mutually exclusive with the 'attributes' flag.
+
+   `-attributes-invited ATTRIBUTESINVITED` (array of strings)
+   :  The email id string array.
+
+      The maximum allowed email adress are 100 and minimim is 0. The maximum length of email string is `150` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`.  Mutually exclusive with the 'attributes' flag. 
+
+   `--attributes-reply-to-mail REPLYTO` (string)
+   :  The email address to reply to.
+
+      The maximum length is `255` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`.  Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-reply-to-name REPLYTONAME` (string)
+   :  The email username from where it is sourced.
+
+      The maximum length is `150` characters. The minimum length is `1` characters. The value must match regular expression `[a-zA-Z0-9-:_]*`. Mutually exclusive with the 'attributes' flag.  
+
+   `--attributes-signing-enabled SIGNINGENABLED` (boolean)
+   :  Signing webhook attributes
+
+      Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-template-id-invitation INVITATIONTEMPLATEID` (string)
+   :  The templete id for invitation.
+
+      The maximum length is `36` characters. The minimum length is `0` characters. The value must match regular expression `.*`.  Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-template-id-invitation INVITATIONTEMPLATEID` (string)
+   :  The templete id for notification.
+
+      The maximum length is `36` characters. The minimum length is `0` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.  
+
+   `--attributes ATTRIBUTES` ([SubscriptionCreateAttributes](#en-cli-subscription-example-schema))
    :  The attributes to be set for subscription.
+
+NOTE: The options which are mentioned as **Mutually exclusive with the 'attributes' flag.** cannot be used along with attributes flag. The attributes flag can include all the atrributes for subscription in json format else user can set these options individually using flag.
+
 
 - **Examples:**
 {: #en-cli-subscription-example-schema}
 
-   - The following example shows the format of the `SubscriptionCreateAttributes` object.
+   - The following example shows the format of the `SubscriptionCreateAttributes` object for webhook.
 
       ```json
       {
@@ -973,19 +1044,19 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
       }
       ```
 
-   - Attributes flag syntax in case of SMS subscription to be created.
+   - The following example shows the format of the `SubscriptionCreateAttributes` object for SMS.
 
       ```json
       {
-         "to" :["+19667895490", "+19845678321"]
+         "invited" :["+1xxxxxxxxxx", "+1xxxxxxxxxx"]
       }
       ```
 
-   - Attributes flag syntax in case of email subscription to be created.
+   - The following example shows the format of the `SubscriptionCreateAttributes` object for IBM Email.
 
       ```json
       {
-         "to" :["entest@gmail.com"],
+         "invited" :["entest@gmail.com"],
          "add_notification_payload": true,
          "reply_to_mail": "en@ibm.com",
          "reply_to_name": "EYS ORG",
@@ -1001,14 +1072,30 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
       }
       ```
 
-   - The following example shows the format of the `SubscriptionUpdateAttributes` object.
+   - The following example shows the format of the `SubscriptionCreateAttributes` object for ServiceNow.
 
       ```json
       {
-         "to" : [ "exampleString" ],
-         "recipient_selection" : "only_destination"
+         "assigned_to" : "serviceuser@gmail.com",
+         "assignment_group" : "incidentgroup"
       }
-      ```
+      ```   
+
+   - The following example shows the format of the `SubscriptionCreateAttributes` object for Custom Email.
+
+
+      ```json
+      {
+         "invited" :["entest@gmail.com"],
+         "add_notification_payload": true,
+         "reply_to_mail": "en@ibm.com",
+         "reply_to_name": "EYS ORG",
+         "from_name":"ABC ORG",
+         "from_email":"Testuser@mailx.com",
+         "template_id_notification": "a59f6e38-7a48-xxxx-b665-3724afc58b13",
+         "template_id_invitation": "f1ef32fb-b7dd-4405-xxxx-7b6719cee8aa"
+      }
+      ```   
 
 ### ibmcloud event-notifications subscription list
 {: #en-cli-subscription-list-command}
@@ -1116,7 +1203,8 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
    ```
    [ Onwards version 1.0.0 ]
    ```sh
-   ibmcloud event-notifications subscription-update --id ID [--name NAME] [--description DESCRIPTION] [--attributes ATTRIBUTES] [--instance-id INSTANCE-ID]
+   ibmcloud event-notifications subscription-update --id ID --name NAME --description DESCRIPTION --attributes ATTRIBUTES  
+   --attributes-add-notification-payload ADDNOTIFICATIONPAYLOADFLAG --attributes-assigned-to ServiceNowAssignee --attributes-assignment-group ServiceNowIncidentGroup  --attributes-from-email FROMEMAIL --attributes-from-name FROMNAME  -attributes-invited ATTRIBUTESINVITED --attributes-reply-to-mail REPLYTO --attributes-reply-to-name REPLYTONAME --attributes-signing-enabled SIGNINGENABLED --attributes-subscribed SUBSCRIBEDEMAIL --attributes-template-id-invitation INVITATIONTEMPLATEID --attributes-template-id-notification TEMPLATEIDNOTIFICATION --attributes-unsubscribed UNSUBSCRIBEDEMAIL --instance-id INSTANCE-ID
    ```
    {: pre}
 
@@ -1142,8 +1230,169 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
       The default value is ``. The maximum length is `100` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z0-9-:_]*/`.
 
-   `[-attributes ATTRIBUTES]` ([SubscriptionUpdateAttributes](#en-cli-subscription-example-schema))
+   `--attributes-add-notification-payload ADDNOTIFICATIONPAYLOADFLAG` (boolean)
+   :  Whether to add the notification payload to the email.
+
+      Default value is set to false.  Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-assigned-to ServiceNowAssignee` (string)
+   :  Name of user ServiceNow incident will be assigned to.
+
+      The maximum length is `150` characters. The minimum length is `3` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-assignment-group ServiceNowIncidentGroup` (string)
+   :  Group Name to which incident will be assigned to.
+
+      The maximum length is `150` characters. The minimum length is `3` characters. The value must match regular expression `.*`.  Mutually exclusive with the 'attributes' flag.
+
+    `--attributes-from-email FROMEMAIL` (string)
+   :  The email adress from where it is sourced.
+
+      The maximum length is `255` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`. Mutually exclusive with the 'attributes' flag.   
+
+   `--attributes-from-name FROMNAME` (string)
+   :  The email username from where it is sourced.
+
+      The maximum length is `150` characters. The minimum length is `1` characters. The value must match regular expression `[a-zA-Z0-9-:_]*`.  Mutually exclusive with the 'attributes' flag.
+
+   `-attributes-invited ATTRIBUTESINVITED` (array of strings)
+   :  The email id string array.
+
+      The maximum allowed email adress are 100 and minimim is 0. The maximum length of email string is `150` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`.  Mutually exclusive with the 'attributes' flag. 
+
+   `--attributes-reply-to-mail REPLYTO` (string)
+   :  The email address to reply to.
+
+      The maximum length is `255` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`.  Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-reply-to-name REPLYTONAME` (string)
+   :  The email username from where it is sourced.
+
+      The maximum length is `150` characters. The minimum length is `1` characters. The value must match regular expression `[a-zA-Z0-9-:_]*`. Mutually exclusive with the 'attributes' flag.  
+
+   `--attributes-signing-enabled SIGNINGENABLED` (boolean)
+   :  Signing webhook attributes
+
+      Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-subscribed SUBSCRIBEDEMAIL` (string)
+   : The email ids or phone numbers.
+
+      The maximum allowed items are 100 and minimu is 0. The maximum length of email adress is `150` characters. The minimum length is `1` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.     
+
+   `--attributes-template-id-invitation INVITATIONTEMPLATEID` (string)
+   :  The templete id for invitation.
+
+      The maximum length is `36` characters. The minimum length is `0` characters. The value must match regular expression `.*`.  Mutually exclusive with the 'attributes' flag.
+
+   `--attributes-template-id-invitation INVITATIONTEMPLATEID` (string)
+   :  The templete id for notification.
+
+      The maximum length is `36` characters. The minimum length is `0` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.  
+
+   `--attributes-unsubscribed UNSUBSCRIBEDEMAIL` (string)
+   : The email ids or phone numbers.
+
+      The maximum allowed items are 100 and minimu is 0. The maximum length of email adress is `150` characters. The minimum length is `1` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.    
+   
+
+   `[-attributes ATTRIBUTES]` ([SubscriptionUpdateAttributes](#en-cli-subscription-update-example-schema))
    :  The attributes to be set for subscription
+
+NOTE: The options which are mentioned as **Mutually exclusive with the 'attributes' flag.** cannot be used along with attributes flag. The attributes flag can include all the atrributes for subscription in json format else user can set these options individually using flag.   
+
+- **Examples:**
+{: #en-cli-subscription-update-example-schema}
+
+   - The following example shows the format of the `SubscriptionUpdateAttributes` object for Webhook.
+
+      ```json
+      {
+         "signing_enabled": true
+      }
+      ```
+
+   - The following example shows the format of the `SubscriptionUpdateAttributes` object for IBM SMS.
+
+      ```json
+      {
+         "invited": {
+            "add": ["+8xxxxxxxxxx"],
+            "remove": ["+1xxxxxxxxxx", "+91xxxxxxxxxx"]
+         },
+         "subscribed": {
+            "remove": ["+1xxxxxxxxxx", "+91xxxxxxxxxx"]
+         },
+         "unsubscribed": {
+            "remove": ["+1xxxxxxxxxx", "+91xxxxxxxxxx"]
+         }
+      }
+      ```
+
+   - The following example shows the format of the `SubscriptionUpdateAttributes` object for IBM Email.
+
+      ```json
+      {
+         "invited": {
+            "add": ["example1@gmail.com"],
+            "remove": []
+         },
+         "subscribed": {
+            "remove": ["example2@gmail.com"]
+         },
+         "unsubscribed": {
+            "remove": ["example3@gmail.com"]
+         },
+         "reply_to_mail": "example@ibm.com",
+         "reply_to_name": "USA news",
+         "from_name": "IBM",
+         "add_notification_payload": true
+      }
+      ```
+
+   - The following example shows the format of the `SubscriptionUpdateAttributes` object for Custom Email.
+
+      ```json
+      {
+         "invited": {
+            "add": ["example1@gmail.com"],
+            "remove": []
+         },
+         "subscribed": {
+            "remove": ["example2@gmail.com"]
+         },
+         "unsubscribed": {
+            "remove": ["example3@gmail.com"]
+         },
+         "reply_to_mail": "example@ibm.com",
+         "reply_to_name": "USA news",
+         "from_name": "IBM",
+         "from_email": "test@email.com",
+         "add_notification_payload": true,
+         "template_id_notification": "a59f6e38-7a48-xxxx-b665-3724afc58b13",
+         "template_id_invitation": "f1ef32fb-b7dd-4405-xxxx-7b6719cee8aa"
+      }
+      ```   
+
+   - The following example shows the format of the `SubscriptionUpdateAttributes` object for Slack.
+
+
+      ```json
+      {
+         "attachment_color" : "#FF0000"
+      }
+      ```
+
+   - The following example shows the format of the `SubscriptionUpdateAttributes` object for Service Now.
+
+      ```json
+      {
+         "assigned_to" : "serviceuser@gmail.com",
+         "assignment_group" : "incidentgroup"
+      }
+      ```
+
+
 
 ### ibmcloud event-notifications tag subscription create
 {: #en-cli-tag-subscription-create-command}
