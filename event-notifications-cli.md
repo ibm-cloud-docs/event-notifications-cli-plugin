@@ -697,6 +697,46 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
    `[--force]` (Boolean)
    :  Activate to force resource deletion (to bypass the confirmation prompt).
 
+### `ibmcloud event-notifications verify-destination-update`
+{: #event-notifications-cli-verify-destination-update-command}
+
+Verify SPF and DKIM records of custom domain.
+
+```sh
+ibmcloud event-notifications verify-destination-update --instance-id INSTANCE-ID --id ID --type TYPE
+```
+
+
+#### Command options
+{: #event-notifications-verify-destination-update-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for Destination. Required.
+
+    The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--type` (string)
+:   Verification type. Required.
+
+    The maximum length is `20` characters. The minimum length is `1` character. The value must match regular expression `/[a-z]/`.
+
+#### Example
+{: #event-notifications-verify-destination-update-examples}
+
+```sh
+ibmcloud event-notifications verify-destination-update \
+    --instance-id exampleString \
+    --id exampleString \
+    --type exampleString
+```
+{: pre}
+
+
 ## Topics
 {: #en-cli-topic}
 
@@ -1637,6 +1677,280 @@ ibmcloud event-notifications integration --id ID [--instance-id INSTANCE-ID]
 :  Unique identifier for integration. Required.
 
    The maximum length is `100` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z0-9-:_]*/`.
+
+
+## Templates
+{: #event-notifications-templates-cli}
+
+IBM Cloud Event Notifications Templates.
+
+### `ibmcloud event-notifications template-create`
+{: #event-notifications-cli-template-create-command}
+
+Create a new Template.
+
+```sh
+ibmcloud event-notifications template-create --instance-id INSTANCE-ID --name NAME --type TYPE [--params PARAMS] [--description DESCRIPTION]
+```
+
+
+#### Command options
+{: #event-notifications-template-create-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--name` (string)
+:   The Message Template. Required.
+
+    The maximum length is `255` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+`--type` (string)
+:   The type of template. Required.
+
+    The maximum length is `24` characters. The minimum length is `22` characters. The value must match regular expression `/^(smtp_custom.notification|smtp_custom.invitation)$/`.
+
+`--params` ([`TemplateConfig`](#cli-template-config-example-schema))
+:   Payload describing a template configuration. This JSON option can instead be provided by setting individual fields with other options. It is mutually exclusive with those options.
+
+    Provide a JSON string option or specify a JSON file to read from by providing a filepath option that begins with a `@`, e.g. `--params=@path/to/file.json`.
+
+`--description` (string)
+:   The Template description.
+
+    The maximum length is `255` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+`--params-body` (string)
+:   Template body. This option provides a value for a sub-field of the JSON option 'params'. It is mutually exclusive with that option.
+
+    The maximum length is `20000` characters. The minimum length is `1` character. The value must match regular expression `/.*/`.
+
+`--params-subject` (string)
+:   The template subject. This option provides a value for a sub-field of the JSON option 'params'. It is mutually exclusive with that option.
+
+    The maximum length is `1000` characters. The minimum length is `1` character. The value must match regular expression `/.*/`.
+
+#### Examples
+{: #event-notifications-template-create-examples}
+
+```sh
+ibmcloud event-notifications template-create \
+    --instance-id exampleString \
+    --name exampleString \
+    --type exampleString \
+    --params '{"body": "exampleString", "subject": "exampleString"}' \
+    --description exampleString
+```
+{: pre}
+
+Alternatively, granular options are available for the sub-fields of JSON string options:
+```sh
+ibmcloud event-notifications template-create \
+    --instance-id exampleString \
+    --name exampleString \
+    --type exampleString \
+    --description exampleString \
+    --params-body exampleString \
+    --params-subject exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications templates`
+{: #event-notifications-cli-templates-command}
+
+List all Templates.
+Note: If the `--all-pages` option is not set, the command will only retrieve a single page of the collection.
+
+```sh
+ibmcloud event-notifications templates --instance-id INSTANCE-ID [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
+```
+
+
+#### Command options
+{: #event-notifications-templates-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--limit` (int64)
+:   Page limit for paginated results.
+
+    The default value is `10`. The maximum value is `100`. The minimum value is `1`.
+
+`--offset` (int64)
+:   offset for paginated results.
+
+    The default value is `0`. The minimum value is `0`.
+
+`--search` (string)
+:   Search string for filtering results.
+
+    The maximum length is `100` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z0-9]/`.
+
+`--all-pages` (bool)
+:   Invoke multiple requests to display all pages of the collection for templates.
+
+#### Example
+{: #event-notifications-templates-examples}
+
+```sh
+ibmcloud event-notifications templates \
+    --instance-id exampleString \
+    --limit 10 \
+    --offset 0 \
+    --search exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications template`
+{: #event-notifications-cli-template-command}
+
+Get details of a Template.
+
+```sh
+ibmcloud event-notifications template --instance-id INSTANCE-ID --id ID
+```
+
+
+#### Command options
+{: #event-notifications-template-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for Template. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+#### Example
+{: #event-notifications-template-examples}
+
+```sh
+ibmcloud event-notifications template \
+    --instance-id exampleString \
+    --id exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications template-update`
+{: #event-notifications-cli-template-update-command}
+
+Update details of a Template.
+
+```sh
+ibmcloud event-notifications template-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--type TYPE] [--params PARAMS]
+```
+
+
+#### Command options
+{: #event-notifications-template-update-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for Template. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+`--name` (string)
+:   Template name.
+
+    The maximum length is `255` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+`--description` (string)
+:   Template description.
+
+    The maximum length is `255` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+`--type` (string)
+:   The type of template.
+
+    The maximum length is `24` characters. The minimum length is `22` characters. The value must match regular expression `/^(smtp_custom.notification|smtp_custom.invitation)$/`.
+
+`--params` ([`TemplateConfig`](#cli-template-config-example-schema))
+:   Payload describing a template configuration. This JSON option can instead be provided by setting individual fields with other options. It is mutually exclusive with those options.
+
+    Provide a JSON string option or specify a JSON file to read from by providing a filepath option that begins with a `@`, e.g. `--params=@path/to/file.json`.
+
+`--params-body` (string)
+:   Template body. This option provides a value for a sub-field of the JSON option 'params'. It is mutually exclusive with that option.
+
+    The maximum length is `20000` characters. The minimum length is `1` character. The value must match regular expression `/.*/`.
+
+`--params-subject` (string)
+:   The template subject. This option provides a value for a sub-field of the JSON option 'params'. It is mutually exclusive with that option.
+
+    The maximum length is `1000` characters. The minimum length is `1` character. The value must match regular expression `/.*/`.
+
+#### Examples
+{: #event-notifications-template-update-examples}
+
+```sh
+ibmcloud event-notifications template-update \
+    --instance-id exampleString \
+    --id exampleString \
+    --name exampleString \
+    --description exampleString \
+    --type exampleString \
+    --params '{"body": "exampleString", "subject": "exampleString"}'
+```
+{: pre}
+
+Alternatively, granular options are available for the sub-fields of JSON string options:
+```sh
+ibmcloud event-notifications template-update \
+    --instance-id exampleString \
+    --id exampleString \
+    --name exampleString \
+    --description exampleString \
+    --type exampleString \
+    --params-body exampleString \
+    --params-subject exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications template-delete`
+{: #event-notifications-cli-template-delete-command}
+
+Delete a Template.
+
+```sh
+ibmcloud event-notifications template-delete --instance-id INSTANCE-ID --id ID
+```
+
+
+#### Command options
+{: #event-notifications-template-delete-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for Template. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+#### Example
+{: #event-notifications-template-delete-examples}
+
+```sh
+ibmcloud event-notifications template-delete \
+    --instance-id exampleString \
+    --id exampleString
+```
+{: pre}
 
 ## Send notifications
 {: #en-cli-send-notifications}
