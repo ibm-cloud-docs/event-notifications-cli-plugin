@@ -71,6 +71,7 @@ ibmcloud event-notifications init [--instance-id INSTANCE-ID]
    - **London:** `https://eu-gb.event-notifications.cloud.ibm.com/event-notifications`
    - **Sydney:** `https://au-syd.event-notifications.cloud.ibm.com/event-notifications`
    - **Frankfurt:** `https://eu-de.event-notifications.cloud.ibm.com/event-notifications`
+   - **Madrid:** `https://eu-es.event-notifications.cloud.ibm.com/event-notifications`
 
 - export **IBMCLOUD_EN_ENDPOINT** variable to set the {{site.data.keyword.en_short}} region private endpoint.
 
@@ -78,6 +79,7 @@ ibmcloud event-notifications init [--instance-id INSTANCE-ID]
    - **London:** `https://private.eu-gb.event-notifications.cloud.ibm.com/event-notifications`
    - **Sydney:** `https://private.au-syd.event-notifications.cloud.ibm.com/event-notifications`
    - **Frankfurt:** `https://private.eu-de.event-notifications.cloud.ibm.com/event-notifications`
+   - **Madrid:** `https://private.eu-es.event-notifications.cloud.ibm.com/event-notifications`
 
 - export **EVENT_NOTIFICATIONS_API_KEY** variable to set the {{site.data.keyword.en_short}} instance `apikey`.
 
