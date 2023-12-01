@@ -308,7 +308,7 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
    ```
    [ Onwards version 1.0.0 ]
    ```sh
-   ibmcloud event-notifications destination-create --name NAME --type TYPE [--description DESCRIPTION] [--certificate CERTIFICATE] [--certificate-content-type CERTIFICATE-CONTENT-TYPE] [--config CONFIG] [--instance-id INSTANCE-ID]
+   ibmcloud event-notifications destination-create --instance-id INSTANCE-ID --name NAME --type TYPE [--description DESCRIPTION] [--collect-failed-events COLLECT-FAILED-EVENTS] [--config CONFIG] [--certificate CERTIFICATE] [--certificate-content-type CERTIFICATE-CONTENT-TYPE] [--icon16x16 ICON16X16] [--icon16x16-content-type ICON16X16-CONTENT-TYPE] [--icon16x162x ICON16X162X] [--icon16x162x-content-type ICON16X162X-CONTENT-TYPE] [--icon32x32 ICON32X32] [--icon32x32-content-type ICON32X32-CONTENT-TYPE] [--icon32x322x ICON32X322X] [--icon32x322x-content-type ICON32X322X-CONTENT-TYPE] [--icon128x128 ICON128X128] [--icon128x128-content-type ICON128X128-CONTENT-TYPE] [--icon128x1282x ICON128X1282X] [--icon128x1282x-content-type ICON128X1282X-CONTENT-TYPE]
    ```
    {: pre}
 
@@ -329,6 +329,11 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 
       Allowable values are: `webhook`. The minimum length is `1` character.
 
+   `--collect-failed-events` (bool)
+   :   Whether to collect the failed event in Cloud Object Storage bucket.
+
+    The default value is `false`.     
+
    `--description DESCRIPTION` (string)
    :  The description of the destination.
 
@@ -336,6 +341,7 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 
    `--certificate CERTIFICATE` (string)
    :  The certificate file path to be provided. The allowed file type is p8 and p12 certificate. Provide file location to pass the certificate.
+   
 
    `--certificate-content-type CERTIFICATE-CONTENT-TYPE` (string)
    :  The certificate content type to be set in the case of iOS destination. The default value is ``. The available options are: p8 or p12.
@@ -343,8 +349,53 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
    `--config CONFIG` ([`DestinationConfig` examples](#en-cli-destination-config-example-schema))
    :  The configuration needed to set the destination-specific parameters.
 
-   `--config`
-   :  For webhook destinations only.
+      `--icon16x16` (io.ReadCloser)
+   :   Safari icon 16x16.
+
+      The maximum length is `5000` characters. The minimum length is `1` character.
+
+   `--icon16x16-content-type` (string)
+   :   The content type of Icon16x16.
+
+   `--icon16x162x` (io.ReadCloser)
+   :   Safari icon 16x16@2x.
+
+      The maximum length is `5000` characters. The minimum length is `1` character.
+
+   `--icon16x162x-content-type` (string)
+   :   The content type of Icon16x162x.
+
+   `--icon32x32` (io.ReadCloser)
+   :   Safari icon 32x32.
+
+      The maximum length is `5000` characters. The minimum length is `1` character.
+
+   `--icon32x32-content-type` (string)
+   :   The content type of Icon32x32.
+
+   `--icon32x322x` (io.ReadCloser)
+   :   Safari icon 32x32@2x.
+
+      The maximum length is `5000` characters. The minimum length is `1` character.
+
+   `--icon32x322x-content-type` (string)
+   :   The content type of Icon32x322x.
+
+   `--icon128x128` (io.ReadCloser)
+   :   Safari icon 128x128.
+
+      The maximum length is `5000` characters. The minimum length is `1` character.
+
+   `--icon128x128-content-type` (string)
+   :   The content type of Icon128x128.
+
+   `--icon128x1282x` (io.ReadCloser)
+   :   Safari icon 128x128@2x.
+
+      The maximum length is `5000` characters. The minimum length is `1` character.
+
+   `--icon128x1282x-content-type` (string)
+   :   The content type of Icon128x1282x.
 
    ```json
    {
@@ -547,7 +598,7 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
       }
       ```  
 
-      - The following example shows the format of the `DestinationConfig` object for Custom Email destination.
+   - The following example shows the format of the `DestinationConfig` object for Custom Email destination.
 
       Process To do the Custom Domain Configuration and Verification: https://cloud.ibm.com/docs/event-notifications?topic=event-notifications-en-destinations-custom-email#en-destinations-custom-email-verify
 
@@ -558,6 +609,8 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
          }
       }
       ```  
+
+   Note: The Custom SMS Destination does not require any Destination Config To be set up.   
      
 
 ### ibmcloud event-notifications destination list
@@ -636,37 +689,97 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
    ```
    [ Onwards version 1.0.0 ]
    ```sh
-   ibmcloud event-notifications destination-update --id ID [--name NAME] [--description DESCRIPTION] [--certificate CERTIFICATE] [--config CONFIG] [--instance-id INSTANCE-ID]
+   ibmcloud event-notifications destination-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--collect-failed-events COLLECT-FAILED-EVENTS] [--config CONFIG] [--certificate CERTIFICATE] [--certificate-content-type CERTIFICATE-CONTENT-TYPE] [--icon16x16 ICON16X16] [--icon16x16-content-type ICON16X16-CONTENT-TYPE] [--icon16x162x ICON16X162X] [--icon16x162x-content-type ICON16X162X-CONTENT-TYPE] [--icon32x32 ICON32X32] [--icon32x32-content-type ICON32X32-CONTENT-TYPE] [--icon32x322x ICON32X322X] [--icon32x322x-content-type ICON32X322X-CONTENT-TYPE] [--icon128x128 ICON128X128] [--icon128x128-content-type ICON128X128-CONTENT-TYPE] [--icon128x1282x ICON128X1282X] [--icon128x1282x-content-type ICON128X1282X-CONTENT-TYPE]
    ```
    {: pre}
 
 - **Parameters to provide:**
 
-   `--id` (string)
-   :  Unique identifier for destination. Required.
+   `--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
 
-      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-   `--name NAME` (string)
-   :  The destination name to be updated.
+`--id` (string)
+:   Unique identifier for Destination. Required.
 
-      The maximum length is `255` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+    The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-   `--description DESCRIPTION` (string)
-   :  The description of the destination.
+`--name` (string)
+:   Destination name.
 
-      The default value is ` `. The maximum length is `255` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+    The maximum length is `255` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
 
-   `--certificate CERTIFICATE` (string)
-   :  The certificate file path to be provided. The allowed file type is p8 and p12 certificate.
+`--description` (string)
+:   Destination description.
 
-   `--config CONFIG` ([`DestinationConfig` examples](#en-cli-destination-config-example-schema))
-   :  The configuration needed to set the destination-specific parameters.
+    The maximum length is `255` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
 
-   `--instance-id`
-   :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
+`--collect-failed-events` (bool)
+:   Whether to collect the failed event in Cloud Object Storage bucket.
 
-      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+    The default value is `false`.
+
+`--config` ([`DestinationConfig`](#en-cli-destination-config-example-schema))
+:   Payload describing a destination configuration.
+
+    Provide a JSON string option or specify a JSON file to read from by providing a filepath option that begins with a `@`, e.g. `--config=@path/to/file.json`.
+
+`--certificate` (io.ReadCloser)
+:   Certificate for APNS.
+
+    The maximum length is `5000` characters. The minimum length is `1` character.
+
+`--certificate-content-type` (string)
+:   The content type of Certificate.
+
+`--icon16x16` (io.ReadCloser)
+:   Safari icon 16x16.
+
+    The maximum length is `5000` characters. The minimum length is `1` character.
+
+`--icon16x16-content-type` (string)
+:   The content type of Icon16x16.
+
+`--icon16x162x` (io.ReadCloser)
+:   Safari icon 16x16@2x.
+
+    The maximum length is `5000` characters. The minimum length is `1` character.
+
+`--icon16x162x-content-type` (string)
+:   The content type of Icon16x162x.
+
+`--icon32x32` (io.ReadCloser)
+:   Safari icon 32x32.
+
+    The maximum length is `5000` characters. The minimum length is `1` character.
+
+`--icon32x32-content-type` (string)
+:   The content type of Icon32x32.
+
+`--icon32x322x` (io.ReadCloser)
+:   Safari icon 32x32@2x.
+
+    The maximum length is `5000` characters. The minimum length is `1` character.
+
+`--icon32x322x-content-type` (string)
+:   The content type of Icon32x322x.
+
+`--icon128x128` (io.ReadCloser)
+:   Safari icon 128x128.
+
+    The maximum length is `5000` characters. The minimum length is `1` character.
+
+`--icon128x128-content-type` (string)
+:   The content type of Icon128x128.
+
+`--icon128x1282x` (io.ReadCloser)
+:   Safari icon 128x128@2x.
+
+    The maximum length is `5000` characters. The minimum length is `1` character.
+
+`--icon128x1282x-content-type` (string)
+:   The content type of Icon128x1282x.
 
 ### ibmcloud event-notifications destination delete
 {: #en-cli-destination-delete-command}
@@ -698,6 +811,75 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 
    `[--force]` (Boolean)
    :  Activate to force resource deletion (to bypass the confirmation prompt).
+
+{: pre}
+
+### `ibmcloud event-notifications enabled-countries`
+{: #event-notifications-cli-enabled-countries-command}
+
+Get enabled country details of SMS destination.
+
+```sh
+ibmcloud event-notifications enabled-countries --instance-id INSTANCE-ID --id ID
+```
+
+
+#### Command options
+{: #event-notifications-enabled-countries-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for Destination. Required.
+
+    The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+#### Example
+{: #event-notifications-enabled-countries-examples}
+
+```sh
+ibmcloud event-notifications enabled-countries \
+    --instance-id=exampleString \
+    --id=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications test-destination`
+{: #event-notifications-cli-test-destination-command}
+
+Test a Destination.
+
+```sh
+ibmcloud event-notifications test-destination --instance-id INSTANCE-ID --id ID
+```
+
+
+#### Command options
+{: #event-notifications-test-destination-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for Destination. Required.
+
+    The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+#### Example
+{: #event-notifications-test-destination-examples}
+
+```sh
+ibmcloud event-notifications test-destination \
+    --instance-id=exampleString \
+    --id=exampleString
+```
+{: pre}
+
 
 ### `ibmcloud event-notifications verify-destination-update`
 {: #event-notifications-cli-verify-destination-update-command}
@@ -982,7 +1164,7 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
    ```
    [ Onwards version 1.0.0 ]
    ```sh
-   ibmcloud event-notifications subscription-create --name NAME --description DESCRIPTION --destination-id DESTINATION-ID --topic-id TOPIC-ID --attributes ATTRIBUTES --attributes-add-notification-payload ADDNOTIFICATIONPAYLOADFLAG --attributes-assigned-to ServiceNowAssignee --attributes-assignment-group ServiceNowIncidentGroup  --attributes-from-email FROMEMAIL --attributes-from-name FROMNAME  -attributes-invited ATTRIBUTESINVITED --attributes-reply-to-mail REPLYTO --attributes-reply-to-name REPLYTONAME --attributes-signing-enabled SIGNINGENABLED --attributes-template-id-invitation INVITATIONTEMPLATEID --attributes-template-id-notification TEMPLATEIDNOTIFICATION --instance-id INSTANCE-ID 
+   ibmcloud event-notifications subscription-create --instance-id INSTANCE-ID --name NAME --destination-id DESTINATION-ID --topic-id TOPIC-ID [--description DESCRIPTION] [--attributes ATTRIBUTES] 
    ```
    {: pre}
 
@@ -1013,65 +1195,8 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
       The maximum length is `150` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
 
-   `--attributes-add-notification-payload ADDNOTIFICATIONPAYLOADFLAG` (boolean)
-   :  Whether to add the notification payload to the email.
-
-      Default value is set to false.  Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-assigned-to ServiceNowAssignee` (string)
-   :  Name of user ServiceNow incident will be assigned to.
-
-      The maximum length is `150` characters. The minimum length is `3` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-assignment-group ServiceNowIncidentGroup` (string)
-   :  Group Name to which incident will be assigned to.
-
-      The maximum length is `150` characters. The minimum length is `3` characters. The value must match regular expression `.*`.  Mutually exclusive with the 'attributes' flag.
-
-    `--attributes-from-email FROMEMAIL` (string)
-   :  The email adress from where it is sourced.
-
-      The maximum length is `255` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`. Mutually exclusive with the 'attributes' flag.   
-
-   `--attributes-from-name FROMNAME` (string)
-   :  The email username from where it is sourced.
-
-      The maximum length is `150` characters. The minimum length is `1` characters. The value must match regular expression `[a-zA-Z0-9-:_]*`.  Mutually exclusive with the 'attributes' flag.
-
-   `-attributes-invited ATTRIBUTESINVITED` (array of strings)
-   :  The email id string array.
-
-      The maximum allowed email adress are 100 and minimim is 0. The maximum length of email string is `150` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`.  Mutually exclusive with the 'attributes' flag. 
-
-   `--attributes-reply-to-mail REPLYTO` (string)
-   :  The email address to reply to.
-
-      The maximum length is `255` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`.  Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-reply-to-name REPLYTONAME` (string)
-   :  The email username from where it is sourced.
-
-      The maximum length is `150` characters. The minimum length is `1` characters. The value must match regular expression `[a-zA-Z0-9-:_]*`. Mutually exclusive with the 'attributes' flag.  
-
-   `--attributes-signing-enabled SIGNINGENABLED` (boolean)
-   :  Signing webhook attributes
-
-      Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-template-id-invitation INVITATIONTEMPLATEID` (string)
-   :  The templete id for invitation.
-
-      The maximum length is `36` characters. The minimum length is `0` characters. The value must match regular expression `.*`.  Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-template-id-invitation INVITATIONTEMPLATEID` (string)
-   :  The templete id for notification.
-
-      The maximum length is `36` characters. The minimum length is `0` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.  
-
    `--attributes ATTRIBUTES` ([SubscriptionCreateAttributes](#en-cli-subscription-example-schema))
    :  The attributes to be set for subscription.
-
-NOTE: The options which are mentioned as **Mutually exclusive with the 'attributes' flag.** cannot be used along with attributes flag. The attributes flag can include all the atrributes for subscription in json format else user can set these options individually using flag.
 
 
 - **Examples:**
@@ -1245,8 +1370,7 @@ NOTE: The options which are mentioned as **Mutually exclusive with the 'attribut
    ```
    [ Onwards version 1.0.0 ]
    ```sh
-   ibmcloud event-notifications subscription-update --id ID --name NAME --description DESCRIPTION --attributes ATTRIBUTES  
-   --attributes-add-notification-payload ADDNOTIFICATIONPAYLOADFLAG --attributes-assigned-to ServiceNowAssignee --attributes-assignment-group ServiceNowIncidentGroup  --attributes-from-email FROMEMAIL --attributes-from-name FROMNAME  -attributes-invited ATTRIBUTESINVITED --attributes-reply-to-mail REPLYTO --attributes-reply-to-name REPLYTONAME --attributes-signing-enabled SIGNINGENABLED --attributes-subscribed SUBSCRIBEDEMAIL --attributes-template-id-invitation INVITATIONTEMPLATEID --attributes-template-id-notification TEMPLATEIDNOTIFICATION --attributes-unsubscribed UNSUBSCRIBEDEMAIL --instance-id INSTANCE-ID
+   ibmcloud event-notifications subscription-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--attributes ATTRIBUTES]
    ```
    {: pre}
 
@@ -1272,76 +1396,10 @@ NOTE: The options which are mentioned as **Mutually exclusive with the 'attribut
 
       The default value is ``. The maximum length is `100` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z0-9-:_]*/`.
 
-   `--attributes-add-notification-payload ADDNOTIFICATIONPAYLOADFLAG` (boolean)
-   :  Whether to add the notification payload to the email.
-
-      Default value is set to false.  Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-assigned-to ServiceNowAssignee` (string)
-   :  Name of user ServiceNow incident will be assigned to.
-
-      The maximum length is `150` characters. The minimum length is `3` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-assignment-group ServiceNowIncidentGroup` (string)
-   :  Group Name to which incident will be assigned to.
-
-      The maximum length is `150` characters. The minimum length is `3` characters. The value must match regular expression `.*`.  Mutually exclusive with the 'attributes' flag.
-
-    `--attributes-from-email FROMEMAIL` (string)
-   :  The email adress from where it is sourced.
-
-      The maximum length is `255` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`. Mutually exclusive with the 'attributes' flag.   
-
-   `--attributes-from-name FROMNAME` (string)
-   :  The email username from where it is sourced.
-
-      The maximum length is `150` characters. The minimum length is `1` characters. The value must match regular expression `[a-zA-Z0-9-:_]*`.  Mutually exclusive with the 'attributes' flag.
-
-   `-attributes-invited ATTRIBUTESINVITED` (array of strings)
-   :  The email id string array.
-
-      The maximum allowed email adress are 100 and minimim is 0. The maximum length of email string is `150` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`.  Mutually exclusive with the 'attributes' flag. 
-
-   `--attributes-reply-to-mail REPLYTO` (string)
-   :  The email address to reply to.
-
-      The maximum length is `255` characters. The minimum length is `1` characters. The value must match regular expression `^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$`.  Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-reply-to-name REPLYTONAME` (string)
-   :  The email username from where it is sourced.
-
-      The maximum length is `150` characters. The minimum length is `1` characters. The value must match regular expression `[a-zA-Z0-9-:_]*`. Mutually exclusive with the 'attributes' flag.  
-
-   `--attributes-signing-enabled SIGNINGENABLED` (boolean)
-   :  Signing webhook attributes
-
-      Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-subscribed SUBSCRIBEDEMAIL` (string)
-   : The email ids or phone numbers.
-
-      The maximum allowed items are 100 and minimu is 0. The maximum length of email adress is `150` characters. The minimum length is `1` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.     
-
-   `--attributes-template-id-invitation INVITATIONTEMPLATEID` (string)
-   :  The templete id for invitation.
-
-      The maximum length is `36` characters. The minimum length is `0` characters. The value must match regular expression `.*`.  Mutually exclusive with the 'attributes' flag.
-
-   `--attributes-template-id-invitation INVITATIONTEMPLATEID` (string)
-   :  The templete id for notification.
-
-      The maximum length is `36` characters. The minimum length is `0` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.  
-
-   `--attributes-unsubscribed UNSUBSCRIBEDEMAIL` (string)
-   : The email ids or phone numbers.
-
-      The maximum allowed items are 100 and minimu is 0. The maximum length of email adress is `150` characters. The minimum length is `1` characters. The value must match regular expression `.*`. Mutually exclusive with the 'attributes' flag.    
-   
 
    `[-attributes ATTRIBUTES]` ([SubscriptionUpdateAttributes](#en-cli-subscription-update-example-schema))
    :  The attributes to be set for subscription
-
-NOTE: The options which are mentioned as **Mutually exclusive with the 'attributes' flag.** cannot be used along with attributes flag. The attributes flag can include all the atrributes for subscription in json format else user can set these options individually using flag.   
+ 
 
 - **Examples:**
 {: #en-cli-subscription-update-example-schema}
@@ -1563,6 +1621,31 @@ Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} integ
 ```sh
 ibmcloud event-notifications Integration --help [ Supported till version 0.2.0 ]
 ```
+### ibmcloud event-notifications integration Create
+{: #en-cli-integration-create-command}
+
+```sh
+ibmcloud event-notifications integration-create --instance-id INSTANCE-ID --type TYPE --metadata METADATA
+```
+
+#### Command options
+{: #en-cli-integration-replace-options}
+
+`--instance-id` (string)
+:  Unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
+
+   The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--type` (string)
+:  Type of the integration collect_failed_events.
+
+   The maximum length is `50` characters. The minimum length is `1` characters. Allowed values are KMS and hs-crypto.
+
+`--metadata` ([IntegrationCreateAttributes](#en-cli-integration-create-example-schema))
+:  Integration schema for update
+
+   Metadata required for integration.
+
 
 ### ibmcloud event-notifications integration replace
 {: #en-cli-integration-update-command}
@@ -1577,6 +1660,19 @@ ibmcloud event-notifications Integration replace --instance-id INSTANCE-ID --id 
 ```sh
 ibmcloud event-notifications integration-replace --instance-id INSTANCE-ID --id ID --type Type --metadata METADATA
 ```
+
+- **Examples:**
+{: #en-cli-integration-create-example-schema}
+
+   - The following example shows the format of the `IntegrationCreateAttributes` object.
+
+      ```json
+      {
+         "endpoint": "https://s3.us-west.cloud-object-storage.appdomain.cloud",
+         "crn": "crn:v1:bluemix:public:cloud-object-storage:global:xxxxxxx6db359a81a1dde8f44bxxxxxx:xxxxxxxx-1d48-xxxx-xxxx-xxxxxxxxxxxx::",
+         "bucket_name": "cloud-object-storage"
+      }
+      ```
 
 #### Command options
 {: #en-cli-integration-replace-options}
