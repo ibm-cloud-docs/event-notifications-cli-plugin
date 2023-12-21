@@ -1626,6 +1626,7 @@ Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} integ
 ```sh
 ibmcloud event-notifications Integration --help
 ```
+
 ### ibmcloud event-notifications integration Create
 {: #en-cli-integration-create-command}
 
