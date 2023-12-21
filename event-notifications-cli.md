@@ -98,8 +98,9 @@ ibmcloud event-notifications show
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} source.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications source --help
 ```
 {: pre}
 
@@ -293,8 +294,9 @@ ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} destination.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications destination --help
 ```
 {: pre}
 
@@ -926,8 +928,9 @@ ibmcloud event-notifications verify-destination-update \
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} topic.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications topic --help
 ```
 {: pre}
 
@@ -1148,8 +1151,9 @@ ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} subscription.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications subscription --help
 ```
 {: pre}
 
@@ -1618,8 +1622,9 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} integration.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications Integration --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications Integration --help
 ```
 ### ibmcloud event-notifications integration Create
 {: #en-cli-integration-create-command}
