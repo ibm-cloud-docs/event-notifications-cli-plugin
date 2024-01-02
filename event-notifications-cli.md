@@ -2,7 +2,7 @@
 
 copyright:
   years: 2021, 2023
-lastupdated: "2023-06-28"
+lastupdated: "2023-12-21"
 
 keywords: event notifications CLI plug-in, CLI reference, en cli reference, event notifications cli reference, event notifications, command line reference
 
@@ -98,8 +98,9 @@ ibmcloud event-notifications show
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} source.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications source --help
 ```
 {: pre}
 
@@ -108,11 +109,11 @@ ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
 
 - **Action:** Create `Source`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications source create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications source-create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
    ```
@@ -144,12 +145,12 @@ ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
 {: #en-cli-source-update-command}
 
 - **Action:** Update `Source`.
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications source update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--enabled ENABLED]
    ```
 
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications source-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--enabled ENABLED]
    ```
@@ -186,12 +187,12 @@ ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
 {: #en-cli-source-list-command}
 
 - **Action:** List all `Source`.
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications source list [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
 
-   [ Onwards version 1.0.0 ]   
+   [From version 1.0.0]   
    ```sh
    ibmcloud event-notifications sources [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
@@ -226,12 +227,12 @@ ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
 {: #en-cli-source-get-command}
 
 - **Action:** Get specific `Source`.
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications source get --id ID [--instance-id INSTANCE-ID]
    ```
 
-   [ Onward version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications source --id ID [--instance-id INSTANCE-ID]
    ```
@@ -263,11 +264,11 @@ ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
 
 - **Action:** Delete specific `Source`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications source delete --instance-id INSTANCE-ID --id ID
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications source-delete  --instance-id INSTANCE-ID --id ID
    ```
@@ -293,8 +294,9 @@ ibmcloud event-notifications source --help [ Supported till version 0.2.0 ]
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} destination.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications destination --help
 ```
 {: pre}
 
@@ -302,11 +304,11 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 {: #en-cli-destination-create}
 
 - **Action:** Create a destination.
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications destination create --name NAME --type TYPE [--description DESCRIPTION] [--certificate CERTIFICATE] [--certificate-content-type CERTIFICATE-CONTENT-TYPE] [--config CONFIG] [--instance-id INSTANCE-ID]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications destination-create --instance-id INSTANCE-ID --name NAME --type TYPE [--description DESCRIPTION] [--collect-failed-events COLLECT-FAILED-EVENTS] [--config CONFIG] [--certificate CERTIFICATE] [--certificate-content-type CERTIFICATE-CONTENT-TYPE] [--icon16x16 ICON16X16] [--icon16x16-content-type ICON16X16-CONTENT-TYPE] [--icon16x162x ICON16X162X] [--icon16x162x-content-type ICON16X162X-CONTENT-TYPE] [--icon32x32 ICON32X32] [--icon32x32-content-type ICON32X32-CONTENT-TYPE] [--icon32x322x ICON32X322X] [--icon32x322x-content-type ICON32X322X-CONTENT-TYPE] [--icon128x128 ICON128X128] [--icon128x128-content-type ICON128X128-CONTENT-TYPE] [--icon128x1282x ICON128X1282X] [--icon128x1282x-content-type ICON128X1282X-CONTENT-TYPE]
    ```
@@ -618,12 +620,12 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 
 - **Action:** List all `Destination`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications destination list [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
 
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications destinations [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
@@ -656,11 +658,11 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 
 - **Action:** Get specific `Destination`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications destination get --id ID [--instance-id INSTANCE-ID]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications destination --id ID [--instance-id INSTANCE-ID]
    ```
@@ -683,11 +685,11 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 
 - **Action:** Update existing `Destination`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications destination update --id ID [--name NAME] [--description DESCRIPTION] [--certificate CERTIFICATE] [--config CONFIG] [--instance-id INSTANCE-ID]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications destination-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--collect-failed-events COLLECT-FAILED-EVENTS] [--config CONFIG] [--certificate CERTIFICATE] [--certificate-content-type CERTIFICATE-CONTENT-TYPE] [--icon16x16 ICON16X16] [--icon16x16-content-type ICON16X16-CONTENT-TYPE] [--icon16x162x ICON16X162X] [--icon16x162x-content-type ICON16X162X-CONTENT-TYPE] [--icon32x32 ICON32X32] [--icon32x32-content-type ICON32X32-CONTENT-TYPE] [--icon32x322x ICON32X322X] [--icon32x322x-content-type ICON32X322X-CONTENT-TYPE] [--icon128x128 ICON128X128] [--icon128x128-content-type ICON128X128-CONTENT-TYPE] [--icon128x1282x ICON128X1282X] [--icon128x1282x-content-type ICON128X1282X-CONTENT-TYPE]
    ```
@@ -786,11 +788,11 @@ ibmcloud event-notifications destination --help [ Supported till version 0.2.0 ]
 
 - **Action:** Delete existing `Destination`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications destination delete --id ID [--instance-id INSTANCE-ID] [--force]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications destination-delete --id ID [--instance-id INSTANCE-ID] [--force]
    ```
@@ -926,8 +928,9 @@ ibmcloud event-notifications verify-destination-update \
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} topic.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications topic --help
 ```
 {: pre}
 
@@ -936,11 +939,11 @@ ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
 
 - **Action:** Create new `Topic`.
    
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications topic create --name NAME [--description DESCRIPTION] [--sources SOURCES] [--instance-id INSTANCE-ID]
    ```
-   [ SOnwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications topic-create --name NAME [--description DESCRIPTION] [--sources SOURCES] [--instance-id INSTANCE-ID]
    ```
@@ -1009,11 +1012,11 @@ ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
 
 - **Action:** List all `Topic`.
    
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications topic list [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications topics [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
@@ -1046,11 +1049,11 @@ ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
 
 - **Action:** Get specific `Topic`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications topic get --id ID [--include INCLUDE] [--instance-id INSTANCE-ID]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications topic --id ID [--include INCLUDE] [--instance-id INSTANCE-ID]
    ```
@@ -1078,11 +1081,11 @@ ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
 
 - **Action:** Update existing `Topic`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications topic update --id ID [--name NAME] [--description DESCRIPTION] [--sources SOURCES] [--instance-id INSTANCE-ID]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications topic-replace --id ID [--name NAME] [--description DESCRIPTION] [--sources SOURCES] [--instance-id INSTANCE-ID]
    ```
@@ -1118,11 +1121,11 @@ ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
 
 - **Action:** Delete existing `Topic`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications topic delete --id ID [--instance-id INSTANCE-ID] [--force]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications topic-delete --id ID [--instance-id INSTANCE-ID] [--force]
    ```
@@ -1148,8 +1151,9 @@ ibmcloud event-notifications topic --help [ Supported till version 0.2.0 ]
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} subscription.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications subscription --help
 ```
 {: pre}
 
@@ -1158,11 +1162,11 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 - **Action:** Create new `Subscription`.
    
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications subscription create [--name NAME] [--description DESCRIPTION] [--destination-id DESTINATION-ID] [--topic-id TOPIC-ID] [--attributes ATTRIBUTES] [--instance-id INSTANCE-ID]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications subscription-create --instance-id INSTANCE-ID --name NAME --destination-id DESTINATION-ID --topic-id TOPIC-ID [--description DESCRIPTION] [--attributes ATTRIBUTES] 
    ```
@@ -1269,11 +1273,11 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 - **Action:** List all `Subscription`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications subscription list [--offset OFFSET] [--limit LIMIT] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
-    [ Onwards version 1.0.0 ]
+    [From version 1.0.0]
    ```sh
    ibmcloud event-notifications subscriptions [--offset OFFSET] [--limit LIMIT] [--search SEARCH] [--instance-id INSTANCE-ID]
    ```
@@ -1306,11 +1310,11 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 - **Action:** Get specific `Subscription`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications subscription get --id ID [--instance-id INSTANCE-ID]
    ```
-    [ Onwards version 1.0.0 ]
+    [From version 1.0.0]
    ```sh
    ibmcloud event-notifications subscription --id ID [--instance-id INSTANCE-ID]
    ```
@@ -1333,12 +1337,12 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 - **Action:** Delete existing `Subscription`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications subscription delete --id ID [--instance-id INSTANCE-ID] [--force]
    ```
 
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications subscription-delete --id ID [--instance-id INSTANCE-ID] [--force]
    ```
@@ -1364,11 +1368,11 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 - **Action:** Update existing `Subscription`.
 
-   [ Supported till version 0.2.0 ]
+   [Supported till version 0.2.0]
    ```sh
    ibmcloud event-notifications subscription update --id ID [--name NAME] [--description DESCRIPTION] [--attributes ATTRIBUTES] [--instance-id INSTANCE-ID]
    ```
-   [ Onwards version 1.0.0 ]
+   [From version 1.0.0]
    ```sh
    ibmcloud event-notifications subscription-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--attributes ATTRIBUTES]
    ```
@@ -1499,7 +1503,7 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 - **Action:** Create `Tag-Subscription`.
 
-    [ Onwards version 1.0.0 ]
+    [From version 1.0.0]
    ```sh
    ibmcloud event-notifications tags-subscription-create --instance-id INSTANCE-ID --id ID --device-id DEVICE-ID --tag-name TAG-NAME
    ```
@@ -1532,7 +1536,7 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 - **Action:** Delete `Tag-Subscription`.
 
-    [ Onwards version 1.0.0 ]
+    [From version 1.0.0]
    ```sh
    ibmcloud event-notifications tags-subscription-delete --instance-id INSTANCE-ID --id ID --device-id DEVICE-ID --tag-name TAG-NAME
    ```
@@ -1565,7 +1569,7 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 - **Action:** list `Tag-Subscriptions`.
 
-    [ Onwards version 1.0.0 ]
+    [From version 1.0.0]
    ```sh
    ibmcloud event-notifications tags-subscription --instance-id INSTANCE-ID --id ID [--device-id DEVICE-ID] [--user-id USER-ID] [--tag-name TAG-NAME] [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
    ```
@@ -1618,9 +1622,11 @@ ibmcloud event-notifications subscription --help [ Supported till version 0.2.0 
 
 Operate on {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} integration.
 
+[Supported till version 0.2.0]
 ```sh
-ibmcloud event-notifications Integration --help [ Supported till version 0.2.0 ]
+ibmcloud event-notifications Integration --help
 ```
+
 ### ibmcloud event-notifications integration Create
 {: #en-cli-integration-create-command}
 
@@ -1652,11 +1658,11 @@ ibmcloud event-notifications integration-create --instance-id INSTANCE-ID --type
 
 Replace `Integration`.
 
-[ Supported till version 0.2.0 ]
+[Supported till version 0.2.0]
 ```sh
 ibmcloud event-notifications Integration replace --instance-id INSTANCE-ID --id ID --type Type --metadata METADATA
 ```
-[ Onwards version 1.0.0]
+[From version 1.0.0]
 ```sh
 ibmcloud event-notifications integration-replace --instance-id INSTANCE-ID --id ID --type Type --metadata METADATA
 ```
@@ -1715,12 +1721,12 @@ ibmcloud event-notifications integration-replace --instance-id INSTANCE-ID --id 
 
 List all `Integrations`.
 
-[ Supported till version 0.2.0 ]
+[Supported till version 0.2.0]
 ```sh
 ibmcloud event-notifications Integration list [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
 ```
 
-[ SOnwards version 1.0.0 ]
+[From version 1.0.0]
 ```sh
 ibmcloud event-notifications integrations [--limit LIMIT] [--offset OFFSET] [--search SEARCH] [--instance-id INSTANCE-ID]
 ```
@@ -1753,12 +1759,12 @@ ibmcloud event-notifications integrations [--limit LIMIT] [--offset OFFSET] [--s
 
 Get specific `Integration`.
 
-[ Supported till version 0.2.0 ]
+[Supported till version 0.2.0]
 ```sh
 ibmcloud event-notifications Integration get --id ID [--instance-id INSTANCE-ID]
 ```
 
-[ Onwards version 1.0.0 ]
+[From version 1.0.0]
 ```sh
 ibmcloud event-notifications integration --id ID [--instance-id INSTANCE-ID]
 ```
