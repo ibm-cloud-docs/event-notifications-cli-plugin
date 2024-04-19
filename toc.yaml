@@ -5,7 +5,7 @@ toc:
     audience: services
     href: /docs/event-notifications-cli-plugin/event-notifications-cli.html
     console-page: /catalog/services/event-notifications
-    product-page: https://www.ibm.com/cloud/devops/event-notifications
+    product-page: https://www.ibm.com/products/event-notifications
     path: event-notifications-cli-plugin
     label: Event Notifications CLI
   entries:
