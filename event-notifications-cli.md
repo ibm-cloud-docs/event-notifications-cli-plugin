@@ -412,6 +412,8 @@ ibmcloud event-notifications destination --help
    }
    ```
 
+   Note: The Event Notifications Destination Cloud Functions has been deprecated and no longer supported in category of destinations.
+
 - **Examples:**
 {: #en-cli-destination-config-example-schema}
 
@@ -499,17 +501,6 @@ ibmcloud event-notifications destination --help
       {
          "params" : {
             "url" : "https://xyz.webhook.office.com"
-         }
-      }
-      ```
-
-   - The following example shows format of the `DestinationConfig` object for {{site.data.keyword.openwhisk}} destination.
-
-      ```json
-      {
-         "params" : {
-            "url" : "https://www.ibmcfendpoint.com",
-            "api_key" : "cffunctionnamespaceserviceidapikey"
          }
       }
       ```
@@ -2664,6 +2655,7 @@ The following example shows the format of the NotificationCreate object.
   "ibmentemplates" : "exampleString",
   "ibmenmailto" : "exampleString",
   "ibmensmsto" : "exampleString",
+  "ibmenmms": {"content": "VBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO","content_type": "image/png"},
   "ibmenhtmlbody" : "exampleString",
   "subject" : "exampleString",
   "data" : {
@@ -2701,7 +2693,7 @@ The following example shows the format of the NotificationCreate object.
 ```sh
 ibmcloud event-notifications send-notifications \
     --instance-id=exampleString \
-    --body='{"specversion": "1.0", "time": "2019-01-01T12:00:00.000Z", "id": "exampleString", "source": "exampleString", "type": "exampleString", "ibmenseverity": "exampleString", "ibmensourceid": "exampleString", "ibmendefaultshort": "exampleString", "ibmendefaultlong": "exampleString", "ibmensubject": "exampleString", "ibmentemplates": "exampleString", "ibmenmailto": "exampleString", "ibmensmsto": "exampleString", "ibmenhtmlbody": "exampleString", "subject": "exampleString", "data": {"anyKey": "anyValue"}, "datacontenttype": "application/json", "ibmenpushto": "{\"fcm_devices\": [\"exampleString\"], \"apns_devices\": [\"exampleString\"], \"huawei_devices\": [\"exampleString\"], \"safari_devices\": [\"exampleString\"], \"chrome_devices\": [\"exampleString\"], \"firefox_devices\": [\"exampleString\"], \"user_ids\": [\"exampleString\"], \"tags\": [\"exampleString\"], \"platforms\": [\"push_android\"]}", "ibmenfcmbody": "{}", "ibmenapnsbody": "{}", "ibmenapnsheaders": "{}", "ibmenchromebody": "{}", "ibmenchromeheaders": "{}", "ibmenfirefoxbody": "{}", "ibmenfirefoxheaders": "{}", "ibmenhuaweibody": "{}", "ibmensafaribody": "{}"}'
+    --body='{"specversion": "1.0", "time": "2019-01-01T12:00:00.000Z", "id": "exampleString", "source": "exampleString", "type": "exampleString", "ibmenseverity": "exampleString", "ibmensourceid": "exampleString", "ibmendefaultshort": "exampleString", "ibmendefaultlong": "exampleString", "ibmensubject": "exampleString", "ibmentemplates": "exampleString", "ibmenmailto": "exampleString", "ibmensmsto": "exampleString","ibmenmms": "{\"content\": \"VBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO\",\"content_type\": \"image/png\"}", "ibmenhtmlbody": "exampleString", "subject": "exampleString", "data": {"anyKey": "anyValue"}, "datacontenttype": "application/json", "ibmenpushto": "{\"fcm_devices\": [\"exampleString\"], \"apns_devices\": [\"exampleString\"], \"huawei_devices\": [\"exampleString\"], \"safari_devices\": [\"exampleString\"], \"chrome_devices\": [\"exampleString\"], \"firefox_devices\": [\"exampleString\"], \"user_ids\": [\"exampleString\"], \"tags\": [\"exampleString\"], \"platforms\": [\"push_android\"]}", "ibmenfcmbody": "{}", "ibmenapnsbody": "{}", "ibmenapnsheaders": "{}", "ibmenchromebody": "{}", "ibmenchromeheaders": "{}", "ibmenfirefoxbody": "{}", "ibmenfirefoxheaders": "{}", "ibmenhuaweibody": "{}", "ibmensafaribody": "{}"}'
 ```
 {: pre}
 
