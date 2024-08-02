@@ -2,14 +2,14 @@ toc:
   properties:
     subcollection: event-notifications-cli-plugin
     service-name: en
-    audience: services
-    href: /docs/event-notifications-cli-plugin/event-notifications-cli.html
+    audience: service
+    href: /docs/event-notifications-cli-plugin/event-notifications-cli
     console-page: /catalog/services/event-notifications
     product-page: https://www.ibm.com/products/event-notifications
     path: event-notifications-cli-plugin
     label: Event Notifications CLI
   entries:
-    - navgroup:
+  - navgroup:
       id: reference
       topics:
       - event-notifications-cli.md

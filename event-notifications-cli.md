@@ -6,7 +6,7 @@ lastupdated: "2024-04-19"
 
 keywords: event notifications CLI plug-in, CLI reference, en cli reference, event notifications cli reference, event notifications, command line reference
 
-subcollection: event-notifications
+subcollection: event-notifications-cli-plugin
 
 ---
 
@@ -87,6 +87,8 @@ ibmcloud event-notifications init [--instance-id INSTANCE-ID]
 {: #en-cli-show-command}
 
 Check your configuration.
+
+The command shows the initialized Event Notifications instance GUID.
 
 ```sh
 ibmcloud event-notifications show
@@ -410,6 +412,8 @@ ibmcloud event-notifications destination --help
    }
    ```
 
+   Note: The Event Notifications Destination Cloud Functions has been deprecated and no longer supported in category of destinations.
+
 - **Examples:**
 {: #en-cli-destination-config-example-schema}
 
@@ -501,17 +505,6 @@ ibmcloud event-notifications destination --help
       }
       ```
 
-   - The following example shows format of the `DestinationConfig` object for {{site.data.keyword.openwhisk}} destination.
-
-      ```json
-      {
-         "params" : {
-            "url" : "https://www.ibmcfendpoint.com",
-            "api_key" : "cffunctionnamespaceserviceidapikey"
-         }
-      }
-      ```
-
    - The following example shows format of the `DestinationConfig` object for PagerDuty destination.
 
       ```json
@@ -565,13 +558,27 @@ ibmcloud event-notifications destination --help
 
    - The following example shows the format of the `DestinationConfig` object for Code Engine destination.
 
+      code engine destination type: application
       ```json
       {
          "params" : {
+            "type" : "application",
             "url" : "https://codeengine.test.com",
             "verb" : "get",
             "custom_headers" : { },
             "sensitive_headers" : [ "exampleString" ]
+         }
+      }
+      ```
+
+      code engine destination type: job
+      ```json
+      {
+         "params" : {
+            "type" : "job",
+            "job_name" : "custom-job",
+            "project_crn" : "crn:v1:bluemix:public:codeengine:us-south:a/e7e5820aeccb40efb78fd69a7858ef23:xxxxxxxxxxxxxx::"
+            
          }
       }
       ```
@@ -1239,7 +1246,8 @@ ibmcloud event-notifications subscription --help
 
       ```json
       {
-         "attachment_color" : "#FF0000"
+         "attachment_color" : "#FF0000",
+         "template_id_notification": "a59f6e38-7a48-xxxx-b665-3724axx58b13",
       }
       ```
 
@@ -1635,7 +1643,7 @@ ibmcloud event-notifications integration-create --instance-id INSTANCE-ID --type
 ```
 
 #### Command options
-{: #en-cli-integration-replace-options}
+{: #en-cli-integration-options}
 
 `--instance-id` (string)
 :  Unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
@@ -1816,7 +1824,7 @@ ibmcloud event-notifications template-create --instance-id INSTANCE-ID --name NA
 
     The maximum length is `24` characters. The minimum length is `22` characters. The value must match regular expression `/^(smtp_custom.notification|smtp_custom.invitation)$/`.
 
-`--params` ([`TemplateConfig`](#cli-template-config-example-schema))
+`--params` ([`TemplateConfig`](#event-notifications-template-create-examples))
 :   Payload describing a template configuration. This JSON option can instead be provided by setting individual fields with other options. It is mutually exclusive with those options.
 
     Provide a JSON string option or specify a JSON file to read from by providing a filepath option that begins with a `@`, e.g. `--params=@path/to/file.json`.
@@ -1839,6 +1847,8 @@ ibmcloud event-notifications template-create --instance-id INSTANCE-ID --name NA
 #### Examples
 {: #event-notifications-template-create-examples}
 
+- The following example shows the format of the `TemplateConfig` object for Email.
+
 ```sh
 ibmcloud event-notifications template-create \
     --instance-id exampleString \
@@ -1847,19 +1857,21 @@ ibmcloud event-notifications template-create \
     --params '{"body": "exampleString", "subject": "exampleString"}' \
     --description exampleString
 ```
-{: pre}
 
-Alternatively, granular options are available for the sub-fields of JSON string options:
+- The following example shows the format of the `TemplateConfig` object for Slack.
+
 ```sh
 ibmcloud event-notifications template-create \
     --instance-id exampleString \
     --name exampleString \
     --type exampleString \
-    --description exampleString \
-    --params-body exampleString \
-    --params-subject exampleString
+    --params '{"body": "ewoJImJsb2NrcyI6IFsKCQl7CgkJCSJ0eXBlIjogInNlY3Rpb24iLAoJCQkidGV4dCI6IHsKCQkJCSJ0eXBlIjogIm1ya2R3biIsCgkJCQkidGV4dCI6ICJOZXcgUGFpZCBUaW1lIE9mZiByZXF1ZXN0IGZyb20gPGV4YW1wbGUuY29tfEZyZWQgRW5yaXF1ZXo+XG5cbjxodHRwczovL2V4YW1wbGUuY29tfFZpZXcgcmVxdWVzdD4iCgkJCX0KCQl9CgldCn0="}' \
+    --description exampleString
 ```
 {: pre}
+
+{: pre}
+
 
 ### `ibmcloud event-notifications templates`
 {: #event-notifications-cli-templates-command}
@@ -1943,13 +1955,13 @@ ibmcloud event-notifications template \
 ```
 {: pre}
 
-### `ibmcloud event-notifications template-update`
+### `ibmcloud event-notifications template-replace`
 {: #event-notifications-cli-template-update-command}
 
 Update details of a Template.
 
 ```sh
-ibmcloud event-notifications template-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--type TYPE] [--params PARAMS]
+ibmcloud event-notifications template-replace --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION] [--type TYPE] [--params PARAMS]
 ```
 
 
@@ -1981,7 +1993,7 @@ ibmcloud event-notifications template-update --instance-id INSTANCE-ID --id ID [
 
     The maximum length is `24` characters. The minimum length is `22` characters. The value must match regular expression `/^(smtp_custom.notification|smtp_custom.invitation)$/`.
 
-`--params` ([`TemplateConfig`](#cli-template-config-example-schema))
+`--params` ([`TemplateConfig`](#event-notifications-template-update-examples))
 :   Payload describing a template configuration. This JSON option can instead be provided by setting individual fields with other options. It is mutually exclusive with those options.
 
     Provide a JSON string option or specify a JSON file to read from by providing a filepath option that begins with a `@`, e.g. `--params=@path/to/file.json`.
@@ -1997,7 +2009,7 @@ ibmcloud event-notifications template-update --instance-id INSTANCE-ID --id ID [
     The maximum length is `1000` characters. The minimum length is `1` character. The value must match regular expression `/.*/`.
 
 #### Examples
-{: #event-notifications-template-update-examples}
+{: #event-notifications-template-replace-examples}
 
 ```sh
 ibmcloud event-notifications template-update \
@@ -2056,196 +2068,635 @@ ibmcloud event-notifications template-delete \
 ```
 {: pre}
 
-## Send notifications
-{: #en-cli-send-notifications}
+## SMTP Configurations
+{: #event-notifications-s-mtp-configurations-cli}
 
-### ibmcloud event-notifications Send notifications
-{: #en-cli-send-notifications-command}
+IBM Cloud Event Notifications SMTP Configurations.
 
-- **Action:** Use below command to send notifications in **cli version 0.0.7**.
+### `ibmcloud event-notifications smtp-configuration-create`
+{: #event-notifications-cli-smtp-configuration-create-command}
 
-   ```sh
-   ibmcloud event-notifications send-notifications --instance-id INSTANCE-ID --subject SUBJECT --severity SEVERITY --id ID --source SOURCE --en-source-id EN-SOURCE-ID --type TYPE --time TIME [--data DATA] [--push-to PUSH-TO] [--message-fcm-body MESSAGE-FCM-BODY] [--message-apns-headers MESSAGE-APNS-HEADERS] [--message-apns-body MESSAGE-APNS-BODY] [--datacontenttype DATACONTENTTYPE] [--specversion SPECVERSION]
-   ```
-   {: pre}
+Create a new SMTP Configuration.
 
-- **Action:** Use below command to send notifications in **cli version 0.0.8** and higher.
+```sh
+ibmcloud event-notifications smtp-configuration-create --instance-id INSTANCE-ID --name NAME --domain DOMAIN [--description DESCRIPTION]
+```
 
-   ```sh
-   ibmcloud event-notifications send-notifications --instance-id INSTANCE-ID [--body BODY] [--ce-ibmenseverity CE-IBMENSEVERITY] [--ce-ibmendefaultshort CE-IBMENDEFAULTSHORT] [--ce-ibmendefaultlong CE-IBMENDEFAULTLONG] [--ce-ibmenfcmbody CE-IBMENFCMBODY] [--ce-ibmenapnsbody CE-IBMENAPNSBODY] [--ce-ibmenpushto CE-IBMENPUSHTO] [--ce-ibmenapnsheaders CE-IBMENAPNSHEADERS] [--ce-ibmenchromebody CE-IBMENCHROMEBODY] [--ce-ibmensafaribody CE-IBMENSAFARIBODY] [--ce-ibmenfirefoxbody CE-IBMENFIREFOXBODY] [--ce-ibmenchromeheaders CE-IBMENCHROMEHEADERS] [--ce-ibmenfirefoxheaders CE-IBMENFIREFOXHEADERS] [--ce-ibmensourceid CE-IBMENSOURCEID] [--ce-id CE-ID] [--ce-source CE-SOURCE] [--ce-type CE-TYPE] [--ce-specversion CE-SPECVERSION] [--ce-time CE-TIME]
-   ```
-   {: pre}
 
-- **Action:** Use below command to send notifications in **cli version 0.1.1** and higher.
+#### Command options
+{: #event-notifications-smtp-configuration-create-cli-options}
 
-   ```sh
-    ibmcloud event-notifications send-notifications --instance-id INSTANCE-ID [--body BODY]
-   ```
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
 
-- **Parameters to provide:**
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-   `[--instance-id INSTANCE-ID]` (string)
-   :  The unique identifier for {{site.data.keyword.cloud_notm}} {{site.data.keyword.en_short}} instance.
+`--name` (string)
+:   The name of SMTP configuration. Required.
 
-      The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+    The maximum length is `250` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
 
-   `--subject SUBJECT` (string)
-   :  The subject for notification.
+`--domain` (string)
+:   Domain Name. Required.
 
-      The minimum length is `1` character.
+    The maximum length is `512` characters. The minimum length is `1` character. The value must match regular expression `/.*/`.
 
-   `[--severity SEVERITY]` or `--ce-ibmenseverity CE-IBMENSEVERITY` (string)
-   :  The level of severity for notification. Required.
+`--description` (string)
+:   The description of SMTP configuration.
 
-      The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/`.
+    The maximum length is `250` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
 
-   `--id` or `--ce-id` (string)
-   :  The Notification ID. Required
+#### Example
+{: #event-notifications-smtp-configuration-create-examples}
 
-      The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/`.
+```sh
+ibmcloud event-notifications smtp-configuration-create \
+    --instance-id=exampleString \
+    --name=exampleString \
+    --domain=exampleString \
+    --description=exampleString
+```
+{: pre}
 
-   `[--source SOURCE]` or `-ce-source CE-SOURCE` (string)
-   :  The source description. Required
+### `ibmcloud event-notifications smtp-configurations`
+{: #event-notifications-cli-smtp-configurations-command}
 
-      The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/`.
+List all SMTP Configurations.
+Note: If the `--all-pages` option is not set, the command will only retrieve a single page of the collection.
 
-   `[--en-source-id]` or `--ce-ibmensourceid CE-IBMENSOURCEID` (string)
-   :  The source ID to be set for Notification source. Required.
+```sh
+ibmcloud event-notifications smtp-configurations --instance-id INSTANCE-ID [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
+```
 
-      The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/`.
 
-   `[--type TYPE]` or `[--ce-type CE-TYPE]` (string)
-   :  The type of notification. Required.
+#### Command options
+{: #event-notifications-smtp-configurations-cli-options}
 
-      The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/`.
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
 
-   `[--time TIME]` or `[--time TIME]` (string)
-   :  The Timestamp to be set for notification. Required.
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-      The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/`.
+`--limit` (int64)
+:   Page limit for paginated results.
 
-   `[--datacontenttype DATACONTENTTYPE]` (string)
-   :  The data content type for notification. Required.
+    The default value is `10`. The maximum value is `100`. The minimum value is `1`.
 
-      The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/`. Default value is application/json.
+`--offset` (int64)
+:   offset for paginated results.
 
-   `[--specversion SPECVERSION]` or `[--ce-specversion CE-SPECVERSION]` (string)
-   :  The spec version value. Default value to be used is 1.0.
+    The default value is `0`. The minimum value is `0`.
 
-      The minimum length is `1` character. The value must match regular expression `/[0-9]`. Default value is 1.0.
+`--search` (string)
+:   Search string for filtering results.
 
-   `[--push-to PUSH-TO]` or `[--ce-ibmenpushto CE-IBMENPUSHTO]` [DeviceDataConfiguration](#en-cli-send-notification-example-schema)
-   :  The Device data information to send data in case of Registered Devices / Users IDs / Platforms. For broadcast, choose {}.
+    The maximum length is `100` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z0-9]/`.
 
-   `[--message-fcm-body MESSAGE-FCM-BODY]` or `[--ce-ibmenfcmbody CE-IBMENFCMBODY]` [FCMMessageBodyDataPayload](#en-cli-send-notification-example-schema)
-   :  FCM message body to send notification to FCM devices.
+`--all-pages` (bool)
+:   Invoke multiple requests to display all pages of the collection for smtp-configurations.
 
-   `[--message-apns-headers MESSAGE-APNS-HEADERS]` or `[--ce-ibmenapnsheaders CE-IBMENAPNSHEADERS]` [APNSHeaders#en-cli-send-notification-example-schema)
-   :  The Custom APNS headers information can be set by using this option.
+#### Example
+{: #event-notifications-smtp-configurations-examples}
 
-   `[--message-apns-body MESSAGE-APNS-BODY]` or `[--ce-ibmenapnsbody CE-IBMENAPNSBODY]` [APNSMessageBody](#en-cli-send-notification-example-schema)
-   :  The apns message body can be set by using this option.
+```sh
+ibmcloud event-notifications smtp-configurations \
+    --instance-id=exampleString \
+    --limit=10 \
+    --offset=0 \
+    --search=exampleString
+```
+{: pre}
 
-   `[--body BODY]` [DataPayload](#en-cli-send-notification-example-schema))
-   :  The body payload to be provided for notification.
+### `ibmcloud event-notifications smtp-user-create`
+{: #event-notifications-cli-smtp-user-create-command}
 
-   `[--ce-ibmendefaultshort]` (string)
-   :  The short text for notification to send.
+Create a new SMTP User.
 
-      The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_/.?:'\";,+=!#@$%^&*() ]*/`.
+```sh
+ibmcloud event-notifications smtp-user-create --instance-id INSTANCE-ID --id ID [--description DESCRIPTION]
+```
 
-   `[--ce-ibmendefaultlong CE-IBMENDEFAULTLONG]` (string)
-   :  The long text for notification top sends.
 
-      The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_/.?:'\";,+=!#@$%^&*() ]*/`.
+#### Command options
+{: #event-notifications-smtp-user-create-cli-options}
 
-   `[--ce-ibmenchromebody CE-IBMENCHROMEBODY]` [ChromeMessageBody](#en-cli-send-notification-example-schema)
-   :  Chrome message body to send notification to FCM devices.
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
 
-   `[--ce-ibmensafaribody CE-IBMENSAFARIBODY]`
-   :  Safari message body to send notification to Safari devices.
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-   `[--ce-ibmenfirefoxbody CE-IBMENFIREFOXBODY]` [FirefoxMessageBody](#en-cli-send-notification-example-schema)
-   :  Firefox message body to send notification to FCM devices.
+`--id` (string)
+:   Unique identifier for SMTP. Required.
 
-   `[--ce-ibmenchromeheaders CE-IBMENCHROMEHEADERS]` [ChromeHeaders](#en-cli-send-notification-example-schema)
-   :  The Custom Chrome headers information can be set by using this option.
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
 
-   `[--ce-ibmenfirefoxheaders CE-IBMENFIREFOXHEADERS]` [FirefoxHeaders](#en-cli-send-notification-example-schema)
-   :  The Custom Firefox information can be set by using this option.
+`--description` (string)
+:   The description of SMTP configuration.
 
-- **Examples:**
-{: #en-cli-send-notification-example-schema}
+    The maximum length is `250` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
 
-   - The following example shows the format of data payload for sending notifications.
+#### Example
+{: #event-notifications-smtp-user-create-examples}
 
-      ```json
-      {
-         "data": {
-            "createTimestamp": 1557282940339,
-            "severity": "LOW",
-            "shortDescription": "examplestring"
-         }
-      }
-      ```
+```sh
+ibmcloud event-notifications smtp-user-create \
+    --instance-id=exampleString \
+    --id=exampleString \
+    --description=exampleString
+```
+{: pre}
 
-   - The following example shows the format of FCM message body to send notification to FCM devices.
+### `ibmcloud event-notifications smtp-users`
+{: #event-notifications-cli-smtp-users-command}
 
-      ```json
-      {"message":{
-         "data":{
-              "alert": "examlestring", "delay_while_idle":true,"time_to_live":2,"collapse_key":"testCollapseKey","notification":{"title":"Match update","body":"Arsenal goal in added time, score is now 3-0"},"data":{"alert":"Notification alert message","url":"https","payload":{"mydevicearra":["cc75e4a6-edd8-3bec-a7c3-dfca6572a03b"]}}
-              }
-         }
-      }
-      ```
+List all SMTP users.
+Note: If the `--all-pages` option is not set, the command will only retrieve a single page of the collection.
 
-   - The following example shows the format of Chrome message body to send notification to FCM devices.
+```sh
+ibmcloud event-notifications smtp-users --instance-id INSTANCE-ID --id ID [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
+```
 
-      ```json
-      {"title":"Hello Chrome", "en_data":{"alert":"Hello Chrome Notification","title":"Chrome New Title","iconUrl":"https://","timeToLive":100,"payload":{"key":"value"}}}
-      ```
 
-   - The following example shows the format of Firefox message body to send notification to FCM devices.
+#### Command options
+{: #event-notifications-smtp-users-cli-options}
 
-      ```json
-      '{"title":"Hello Firefox", "en_data":{"alert":"Hello firefox Notification","title":"firefox New Title","iconUrl":"https://","timeToLive":100,"payload":{"key":"value"}}}'
-      ```
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
 
-   - The following example shows the format of apns/chrome/fireox custom headers.
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
-      ```json
-      {
-          "test": "test header",
-          "new": "newmessage"
-      }
-      ```
+`--id` (string)
+:   Unique identifier for SMTP. Required.
 
-   - The following example shows the format of APNS message body to send notification to FCM devices.
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
 
-      ```json
-      {"data":{"alert":"alert","url":"https","badge":9,"sound":"bingbong.aiff","payload":"{\\\"fcm_devices\\\": [\\\"cc75e4a6-edd8-3bec-a7c3-dfca6572a03b\\\"]}","type":"DEFAULT","subtitle":"dummy","title":"dummy1","body":"body","ios_action_key":"key","interactive_category":"interactiveCategory","title_loc_key":"titleLocKey","loc_key":"GAME_PLAY_REQUEST_FORMAT","launch_image":"image.png","title_loc_args":["Shelly","Rick"],"loc_args":["Shelly","Rick"],"attachment_url":"some url","apns_collapse_id":"12","apns_thread_id":"1","apns_group_summary_arg":"apnsGroupSummaryArg","apns_group_summary_arg_count":1}}
-      ```
+`--limit` (int64)
+:   Page limit for paginated results.
 
-   - The following example shows the format of body to send notification to slack destination.
+    The default value is `10`. The maximum value is `100`. The minimum value is `1`.
 
-      ```json
-      {"specversion" : "1.0","source": "github.io/pr","ibmensourceid": "4e22c0fe-5db3-49ce-9b86-47d3fd57f7a8:api","id":"1234-1234-sdfs-234", "time" : "2018-04-05T17:31:00Z","type":"com.ibm.cloud.compliance.certificate_manager:certificate_expired", "subject":"12345678",  "ibmenseverity":"HIGH","ibmensmstext":"Test message for EN - 5syat56","ibmensubject":"Findings on IBM Cloud Security Advisor's","ibmenhtmlbody":" \"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\" ","ibmendefaultshort":"Security findings in your IBM Cloud Account","ibmendefaultlong":"Certificate expiring in 90 days. Please login to cloud console to find more information","ibmenfcmbody": "{\"notification\":{\"title\":\"Hello, Tag!\",\"time_to_live\":100}}",
-      "ibmenapnsbody": "{\"en_data\":{\"alert\":\"alert\"},\"aps\":{\"alert\":{\"loc-args\":[\"Shelly\",\"Rick\"],\"action-loc-key\":\"key\",\"launch-image\":\"image.png\",\"loc-key\":\"GAME_PLAY_REQUEST_FORMAT\",\"subtitle\":\"Tes Sub apns 9\",\"summary-arg\":\"apnsGroupSummaryArg\",\"body\":\"Pradeep Notification 10\",\"title-loc-key\":\"titleLocKey\",\"title\":\"Test apns 9\",\"summary-arg-count\":1,\"title-loc-args\":null},\"badge\":9,\"sound\":\"bingbong.aiff\",\"category\":\"interactiveCategory\",\"thread-id\":\"12\",\"mutable-content\":1},\"url\":\"https\",\"apns-collapse-id\":\"10\",\"attachment-url\":\"some url\"}",
-      "message_apns_headers": "{\"apns-collapse-id\": \"13\"}", "ibmenapnsheaders": "{\"apns-collapse-id\": \"13\"}","ibmenchromebody": "{\"title\":\"Hello Chrome\", \"en_data\":{\"alert\":\"Hello Chrome Notification\",\"title\":\"Chrome New Title\",\"iconUrl\":\"https://\",\"timeToLive\":100,\"payload\":{\"key\":\"value\"}}}","ibmenfirefoxbody": "{\"title\":\"Hello Firefox\", \"en_data\":{\"alert\":\"Hello Firefox Notification\",\"title\":\"Firefox New Title\",\"iconUrl\":\"https://\",\"timeToLive\":100,\"payload\":{\"key\":\"value\"}}}","ibmenfirefoxheaders": "{\"TTL\":100}","ibmenchromeheaders":"{\"TTL\":100}" ,"ibmenpushto": "{\"platforms\":[\"push_ios\"]}","datacontenttype" : "application/json", "data": {"author": {"account_id": "dgduyeiueiinchdidkuedfrr","email": "testuser@gmail.com","id": "IBMid-76893","kind": "user" },"create_time": "2022-02-28T13:28:14.043755123Z","create_timestamp": 1646054894,"issuer": "IBM Cloud Security and Compliance Center","issuer_url": "https://cloud.ibm.com/security-compliance","long_description": "Success! Your Event Notifications instance is configured with IBM Cloud Security and Compliance Center.","payload_type": "test","reported_by": {"id": "compliance","title": "IBM Cloud Security and Compliance Center", "url": "https://cloud.ibm.com/security-compliance"},"severity": "LOW","short_description": "Success! Your Event Notifications instance is configured with IBM Cloud Security and Compliance Center.","transaction_id":"6a25fd3d-8530-43b9-96a5-ede2a7712bc9"}
-      ```
+`--offset` (int64)
+:   offset for paginated results.
 
-   - The following example shows the target device configuration example.
+    The default value is `0`. The minimum value is `0`.
 
-      ```json
-      {"fcm_devices": ["deviceidstring"],"user_ids": ["useridstring"], "platforms": ["G"]}
-      ```
+`--search` (string)
+:   Search string for filtering results.
 
-   - The following example shows the send notification general payload for cli version above 0.1.1
+    The maximum length is `100` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z0-9]/`.
 
-      ```json
-      ibmcloud en send-notifications --instance-id <instance-id> --body '{"id": "b2198eb8-04b1-48ec-a78c-ee87694dd845", "time": "2018-04-05T17:31:00Z","type": "*","subject": "This is a simple monitoring test alert!!","message_text": "Hi, Welcome from the IBM Cloud - Event Notifications service!", "message_subject": "This is a simple monitoring test alert!!","source": "apisource/git", "specversion": "1.0","ibmensourceid": "e9785d21-4780-467a-8836-c530f5v6738:api","data": {"alert": "En Proactive monitoring","message": "Hi, Welcome from the IBM Cloud - Event Notifications service"},"ibmenfcmbody": "{\"notification\": {\"title\": \"En Proactive monitoring test alert!\"}}","ibmenpushto": "{\"platforms\": [\"push_chrome\", \"push_firefox\", \"push_android\"]}","ibmenapnsbody": "{\"aps\": {\"alert\": \"En Proactive monitoring test alert!\"}}","ibmenchromebody": "{\"title\": \"En Proactive monitoring test alert!\"}","ibmenchromeheaders": "{\"TTL\": 3600}","ibmenfirefoxbody": "{\"title\": \"En Proactive monitoring test alert!\"}","ibmenfirefoxheaders": "{\"TTL\": 3600}","datacontenttype": "application/json","ibmendefaultlong": "Hi, we are making sure from our side that the service is available for consumption. If you are receiving this event, it means we doing fine. Thank you.","ibmendefaultshort": "This is a proactive monitoring test alert from IBM Cloud Event Notifications service."}'
-      ```
+`--all-pages` (bool)
+:   Invoke multiple requests to display all pages of the collection for smtp-users.
+
+#### Example
+{: #event-notifications-smtp-users-examples}
+
+```sh
+ibmcloud event-notifications smtp-users \
+    --instance-id=exampleString \
+    --id=exampleString \
+    --limit=10 \
+    --offset=0 \
+    --search=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications smtp-configuration`
+{: #event-notifications-cli-smtp-configuration-command}
+
+Get details of a SMTP Configuration.
+
+```sh
+ibmcloud event-notifications smtp-configuration --instance-id INSTANCE-ID --id ID
+```
+
+
+#### Command options
+{: #event-notifications-smtp-configuration-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for SMTP. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+#### Example
+{: #event-notifications-smtp-configuration-examples}
+
+```sh
+ibmcloud event-notifications smtp-configuration \
+    --instance-id=exampleString \
+    --id=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications smtp-configuration-update`
+{: #event-notifications-cli-smtp-configuration-update-command}
+
+Update details of SMTP.
+
+```sh
+ibmcloud event-notifications smtp-configuration-update --instance-id INSTANCE-ID --id ID [--name NAME] [--description DESCRIPTION]
+```
+
+
+#### Command options
+{: #event-notifications-smtp-configuration-update-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for SMTP. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+`--name` (string)
+:   SMTP name.
+
+    The maximum length is `250` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+`--description` (string)
+:   SMTP description.
+
+    The maximum length is `250` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+#### Example
+{: #event-notifications-smtp-configuration-update-examples}
+
+```sh
+ibmcloud event-notifications smtp-configuration-update \
+    --instance-id=exampleString \
+    --id=exampleString \
+    --name=exampleString \
+    --description=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications smtp-configuration-delete`
+{: #event-notifications-cli-smtp-configuration-delete-command}
+
+Delete a SMTP Configuration.
+
+```sh
+ibmcloud event-notifications smtp-configuration-delete --instance-id INSTANCE-ID --id ID
+```
+
+
+#### Command options
+{: #event-notifications-smtp-configuration-delete-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for SMTP. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+#### Example
+{: #event-notifications-smtp-configuration-delete-examples}
+
+```sh
+ibmcloud event-notifications smtp-configuration-delete \
+    --instance-id=exampleString \
+    --id=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications smtp-user`
+{: #event-notifications-cli-smtp-user-command}
+
+Get details of a SMTP User.
+
+```sh
+ibmcloud event-notifications smtp-user --instance-id INSTANCE-ID --id ID --user-id USER-ID
+```
+
+
+#### Command options
+{: #event-notifications-smtp-user-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for SMTP. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+`--user-id` (string)
+:   UserID. Required.
+
+    The maximum length is `256` characters. The minimum length is `5` characters. The value must match regular expression `/.*/`.
+
+#### Example
+{: #event-notifications-smtp-user-examples}
+
+```sh
+ibmcloud event-notifications smtp-user \
+    --instance-id=exampleString \
+    --id=exampleString \
+    --user-id=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications smtp-user-update`
+{: #event-notifications-cli-smtp-user-update-command}
+
+Update details of SMTP User.
+
+```sh
+ibmcloud event-notifications smtp-user-update --instance-id INSTANCE-ID --id ID --user-id USER-ID [--description DESCRIPTION]
+```
+
+
+#### Command options
+{: #event-notifications-smtp-user-update-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for SMTP. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+`--user-id` (string)
+:   UserID. Required.
+
+    The maximum length is `256` characters. The minimum length is `5` characters. The value must match regular expression `/.*/`.
+
+`--description` (string)
+:   SMTP user description.
+
+    The maximum length is `250` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z 0-9-_\/.?:'";,+=!#@$%^&*() ]*/`.
+
+#### Example
+{: #event-notifications-smtp-user-update-examples}
+
+```sh
+ibmcloud event-notifications smtp-user-update \
+    --instance-id=exampleString \
+    --id=exampleString \
+    --user-id=exampleString \
+    --description=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications smtp-user-delete`
+{: #event-notifications-cli-smtp-user-delete-command}
+
+Delete a SMTP user.
+
+```sh
+ibmcloud event-notifications smtp-user-delete --instance-id INSTANCE-ID --id ID --user-id USER-ID
+```
+
+
+#### Command options
+{: #event-notifications-smtp-user-delete-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for SMTP. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+`--user-id` (string)
+:   UserID. Required.
+
+    The maximum length is `256` characters. The minimum length is `5` characters. The value must match regular expression `/.*/`.
+
+#### Example
+{: #event-notifications-smtp-user-delete-examples}
+
+```sh
+ibmcloud event-notifications smtp-user-delete \
+    --instance-id=exampleString \
+    --id=exampleString \
+    --user-id=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications smtp-allowed-ips`
+{: #event-notifications-cli-smtp-allowed-ips-command}
+
+Get details of a SMTP allowed IPs.
+
+```sh
+ibmcloud event-notifications smtp-allowed-ips --instance-id INSTANCE-ID --id ID
+```
+
+
+#### Command options
+{: #event-notifications-smtp-allowed-ips-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for SMTP. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+#### Example
+{: #event-notifications-smtp-allowed-ips-examples}
+
+```sh
+ibmcloud event-notifications smtp-allowed-ips \
+    --instance-id=exampleString \
+    --id=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications smtp-allowed-ips-update`
+{: #event-notifications-cli-smtp-allowed-ips-update-command}
+
+Update details of SMTP.
+
+```sh
+ibmcloud event-notifications smtp-allowed-ips-update --instance-id INSTANCE-ID --id ID --subnets SUBNETS
+```
+
+
+#### Command options
+{: #event-notifications-smtp-allowed-ips-update-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for SMTP. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+`--subnets` ([]string)
+:   The SMTP allowed Ips. Required.
+
+    The list items must match regular expression `/.*/`. The maximum length is `100` items. The minimum length is `1` item.
+
+#### Example
+{: #event-notifications-smtp-allowed-ips-update-examples}
+
+```sh
+ibmcloud event-notifications smtp-allowed-ips-update \
+    --instance-id=exampleString \
+    --id=exampleString \
+    --subnets=exampleString
+```
+{: pre}
+
+### `ibmcloud event-notifications verify-smtp-update`
+{: #event-notifications-cli-verify-smtp-update-command}
+
+Verify SPF and DKIM records of SMTP.
+
+```sh
+ibmcloud event-notifications verify-smtp-update --instance-id INSTANCE-ID --id ID --type TYPE
+```
+
+
+#### Command options
+{: #event-notifications-verify-smtp-update-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--id` (string)
+:   Unique identifier for SMTP. Required.
+
+    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+`--type` (string)
+:   SMTP Verification type. Required.
+
+    The maximum length is `20` characters. The minimum length is `1` character. The value must match regular expression `/.*/`.
+
+#### Example
+{: #event-notifications-verify-smtp-update-examples}
+
+```sh
+ibmcloud event-notifications verify-smtp-update \
+    --instance-id=exampleString \
+    --id=exampleString \
+    --type=exampleString
+```
+{: pre}
+
+## Send Notifications
+{: #event-notifications-send-notifications-cli}
+
+This document describes the payload details for sending events using the API sources in Event Notifications. API sources can be used to send events from your backend applications. Event Notifications supports two modes to make HTTP calls. This is adhering to the CloudEvents specification. These modes are Binary Mode and Structured mode. More details here - https://github.com/cloudevents/spec. In the Binary Content Mode, the value of the event data is placed into the HTTP request, or response, body as-is, with the datacontenttype attribute value declaring its media type in the HTTP Content-Type header; all other event attributes are mapped to HTTP headers. All the attribute names are prefixed with ce- and added to the header (except for the data and datacontenttype). When mandatory attributes of CloudEvents (specversion, id, type, and source) are passed as part of headers the request is treated as binary mode. Structured Mode. In the Structured Content Mode, event metadata attributes and event data are placed into the HTTP request body. For structured mode, set the Content-Type header to application/cloudevents+json. Mandatory attributes of CloudEvents (specversion, id, type, and source) are required to be part of the request body. In addition, id data is provided as datacontenttype which is mandatory. We only support datacontenttype as \"application/json\".
+
+### `ibmcloud event-notifications send-notifications`
+{: #event-notifications-cli-send-notifications-command}
+
+Send Notifications body from the instance. For more information about Event Notifications payload, see [here](/docs/event-notifications?topic=event-notifications-en-spec-payload).
+
+```sh
+ibmcloud event-notifications send-notifications --instance-id INSTANCE-ID [--body BODY]
+```
+
+
+#### Command options
+{: #event-notifications-send-notifications-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--body` ([`NotificationCreate`](#cli-notification-create-example-schema))
+:   Payload describing a notification create request.
+
+    Provide a JSON string option or specify a JSON file to read from by providing a filepath option that begins with a `@`, e.g. `--body=@path/to/file.json`.
+
+### NotificationCreate
+{: #cli-notification-create-example-schema}
+
+The following example shows the format of the NotificationCreate object.
+
+```json
+
+{
+  "specversion" : "1.0",
+  "time" : "2019-01-01T12:00:00.000Z",
+  "id" : "exampleString",
+  "source" : "exampleString",
+  "type" : "exampleString",
+  "ibmenseverity" : "exampleString",
+  "ibmensourceid" : "exampleString",
+  "ibmendefaultshort" : "exampleString",
+  "ibmendefaultlong" : "exampleString",
+  "ibmensubject" : "exampleString",
+  "ibmentemplates" : "exampleString",
+  "ibmenmailto" : "exampleString",
+  "ibmensmsto" : "exampleString",
+  "ibmenmms": {"content": "VBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO","content_type": "image/png"},
+  "ibmenhtmlbody" : "exampleString",
+  "subject" : "exampleString",
+  "data" : {
+    "anyKey" : "anyValue"
+  },
+  "datacontenttype" : "application/json",
+  "ibmenpushto" : "{
+    \"fcm_devices\" : [ \"exampleString\" ],
+    \"apns_devices\" : [ \"exampleString\" ],
+    \"huawei_devices\" : [ \"exampleString\" ],
+    \"safari_devices\" : [ \"exampleString\" ],
+    \"chrome_devices\" : [ \"exampleString\" ],
+    \"firefox_devices\" : [ \"exampleString\" ],
+    \"user_ids\" : [ \"exampleString\" ],
+    \"tags\" : [ \"exampleString\" ],
+    \"platforms\" : [ \"push_android\" ]
+  }",
+  "ibmenfcmbody" : "{ }",
+  "ibmenapnsbody" : "{ }",
+  "ibmenapnsheaders" : "{ }",
+  "ibmenchromebody" : "{ }",
+  "ibmenchromeheaders" : "{ }",
+  "ibmenfirefoxbody" : "{ }",
+  "ibmenfirefoxheaders" : "{ }",
+  "ibmenhuaweibody" : "{ }",
+  "ibmensafaribody" : "{ }"
+}
+```
+{: codeblock}
+
+
+#### Example
+{: #event-notifications-send-notifications-examples}
+
+```sh
+ibmcloud event-notifications send-notifications \
+    --instance-id=exampleString \
+    --body='{"specversion": "1.0", "time": "2019-01-01T12:00:00.000Z", "id": "exampleString", "source": "exampleString", "type": "exampleString", "ibmenseverity": "exampleString", "ibmensourceid": "exampleString", "ibmendefaultshort": "exampleString", "ibmendefaultlong": "exampleString", "ibmensubject": "exampleString", "ibmentemplates": "exampleString", "ibmenmailto": "exampleString", "ibmensmsto": "exampleString","ibmenmms": "{\"content\": \"VBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO\",\"content_type\": \"image/png\"}", "ibmenhtmlbody": "exampleString", "subject": "exampleString", "data": {"anyKey": "anyValue"}, "datacontenttype": "application/json", "ibmenpushto": "{\"fcm_devices\": [\"exampleString\"], \"apns_devices\": [\"exampleString\"], \"huawei_devices\": [\"exampleString\"], \"safari_devices\": [\"exampleString\"], \"chrome_devices\": [\"exampleString\"], \"firefox_devices\": [\"exampleString\"], \"user_ids\": [\"exampleString\"], \"tags\": [\"exampleString\"], \"platforms\": [\"push_android\"]}", "ibmenfcmbody": "{}", "ibmenapnsbody": "{}", "ibmenapnsheaders": "{}", "ibmenchromebody": "{}", "ibmenchromeheaders": "{}", "ibmenfirefoxbody": "{}", "ibmenfirefoxheaders": "{}", "ibmenhuaweibody": "{}", "ibmensafaribody": "{}"}'
+```
+{: pre}
+
 
 #### Additional properties that can be configured for the iOS notification
 {: #en-cli-send-notifications-command-addprops-ios}
