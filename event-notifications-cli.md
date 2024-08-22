@@ -2531,40 +2531,8 @@ ibmcloud event-notifications smtp-allowed-ips \
 ### `ibmcloud event-notifications smtp-allowed-ips-update`
 {: #event-notifications-cli-smtp-allowed-ips-update-command}
 
-Update details of SMTP.
+Note: The support for legacy allowlisting has been deprecated. The support has been enabled via Context-based-restrictions. For detailed information, please refer here: https://cloud.ibm.com/docs/event-notifications?topic=event-notifications-en-smtp-configurations#en-smtp-configurations-cbr
 
-```sh
-ibmcloud event-notifications smtp-allowed-ips-update --instance-id INSTANCE-ID --id ID --subnets SUBNETS
-```
-
-
-#### Command options
-{: #event-notifications-smtp-allowed-ips-update-cli-options}
-
-`--instance-id` (string)
-:   Unique identifier for IBM Cloud Event Notifications instance. Required.
-
-    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
-
-`--id` (string)
-:   Unique identifier for SMTP. Required.
-
-    The maximum length is `32` characters. The minimum length is `32` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
-
-`--subnets` ([]string)
-:   The SMTP allowed Ips. Required.
-
-    The list items must match regular expression `/.*/`. The maximum length is `100` items. The minimum length is `1` item.
-
-#### Example
-{: #event-notifications-smtp-allowed-ips-update-examples}
-
-```sh
-ibmcloud event-notifications smtp-allowed-ips-update \
-    --instance-id=exampleString \
-    --id=exampleString \
-    --subnets=exampleString
-```
 {: pre}
 
 ### `ibmcloud event-notifications verify-smtp-update`
@@ -2603,6 +2571,80 @@ ibmcloud event-notifications verify-smtp-update \
     --instance-id=exampleString \
     --id=exampleString \
     --type=exampleString
+```
+{: pre}
+
+## Metrics
+{: #event-notifications-metrics-cli}
+
+.
+
+### `ibmcloud event-notifications metrics`
+{: #event-notifications-cli-metrics-command}
+
+Get metrics.
+
+```sh
+ibmcloud event-notifications metrics --instance-id INSTANCE-ID --destination-type DESTINATION-TYPE --gte GTE --lte LTE [--id ID] [--email-to EMAIL-TO] [--notification-id NOTIFICATION-ID] [--subject SUBJECT]
+```
+
+
+#### Command options
+{: #event-notifications-metrics-cli-options}
+
+`--instance-id` (string)
+:   Unique identifier for IBM Cloud Event Notifications instance. Required.
+
+    The maximum length is `256` characters. The minimum length is `10` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
+
+`--destination-type` (string)
+:   Destination type. Allowed values are [smtp_custom]. Required.
+
+    Allowable values are: `smtp_custom`.
+
+`--gte` (string)
+:   GTE (greater than equal), start timestamp in UTC. Required.
+
+    The maximum length is `28` characters. The minimum length is `1` character. The value must match regular expression `/[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}Z/`.
+
+`--lte` (string)
+:   LTE (less than equal), end timestamp in UTC. Required.
+
+    The maximum length is `28` characters. The minimum length is `1` character. The value must match regular expression `/[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}Z/`.
+
+`--id` (string)
+:   Unique identifier for Source.
+
+    The maximum length is `100` characters. The minimum length is `1` character. The value must match regular expression `/[a-zA-Z0-9-:_]*/`.
+
+`--email-to` (string)
+:   Receiver email id.
+
+    The maximum length is `256` characters. The minimum length is `0` characters. The value must match regular expression `/[A-Za-z0-9\\._%+\\-]+@[A-Za-z0-9\\.\\-]+\\.[A-Za-z]{2,}/`.
+
+`--notification-id` (string)
+:   Notification Id.
+
+    The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/`.
+
+`--subject` (string)
+:   Email subject.
+
+    The maximum length is `256` characters. The minimum length is `0` characters. The value must match regular expression `/[a-zA-Z0-9]/`.
+
+#### Example
+{: #event-notifications-metrics-examples}
+
+```sh
+ibmcloud event-notifications metrics \
+    --instance-id=exampleString \
+    --destination-type=smtp_custom \
+    --gte=exampleString \
+    --lte=exampleString \
+    --id=exampleString \
+    --email-to=exampleString \
+    --notification-id=exampleString \
+    --subject=exampleString
 ```
 {: pre}
 
