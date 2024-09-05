@@ -29,7 +29,10 @@ When you log in to the [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cl
 {: tip}
 
 [IBM Cloud Quick Reference card](https://cloud.ibm.com/media/docs/downloads/IBM%20Cloud%20CLI%20quick%20reference.pdf).
+
 {: note}
+
+**Note** The CLI Plugun versions from 0.0.5 to 1.0.0 is deprecated.
 
 ## Install the {{site.data.keyword.en_short}} CLI
 {: #en-cli-install}
@@ -468,12 +471,24 @@ ibmcloud event-notifications destination --help
       }
       ```
 
-   - The following example shows format of the `DestinationConfig` object for Slack destination.
+   - The following example shows format of the `DestinationConfig` object for Slack destination with type as incoming_webhook.
 
       ```json
       {
          "params" : {
+            "type" : "incoming_webhook",
             "url" : "https://hooks.slack.com/services/G0gyhsush/TYodsjhs/GHTbfidsimkk"
+         }
+      }
+      ```
+
+      - The following example shows format of the `DestinationConfig` object for Slack destination with type as direct_message.
+
+      ```json
+      {
+         "params" : {
+            "type" : "direct_message",
+            "token" : "vhdwvecwefwefewivcweivcwiwiciwcvwicwec"
          }
       }
       ```
@@ -1242,7 +1257,7 @@ ibmcloud event-notifications subscription --help
       }
       ```
 
-   - The following example shows the format of the `SubscriptionCreateAttributes` object for slack.
+   - The following example shows the format of the `SubscriptionCreateAttributes` object for Slack Destination type as incoming_webhook.
 
       ```json
       {
@@ -1250,6 +1265,15 @@ ibmcloud event-notifications subscription --help
          "template_id_notification": "a59f6e38-7a48-xxxx-b665-3724axx58b13",
       }
       ```
+
+   - The following example shows the format of the `SubscriptionCreateAttributes` object for Slack Destination type as direct_message.
+
+   ```json
+   {
+      "channels" : [{ "id": "GHIUIFJHGGH"},{"id": "TSFDIDFOFNF"}]
+      "template_id_notification": "a59f6e38-7a48-xxxx-b665-3724axx58b13",
+   }
+   ```
 
    - The following example shows the format of the `SubscriptionCreateAttributes` object for ServiceNow.
 
@@ -1486,14 +1510,26 @@ ibmcloud event-notifications subscription --help
       }
       ```   
 
-   - The following example shows the format of the `SubscriptionUpdateAttributes` object for Slack.
+   - The following example shows the format of the `SubscriptionUpdateAttributes` object for Slack for type as `incoming_webhook`.
 
 
       ```json
       {
-         "attachment_color" : "#FF0000"
+         "attachment_color" : "#FF0000",
+         "template_id_notification": "a59f6e38-7a48-xxxx-b665-3724axx58b13",
+
       }
       ```
+
+    - The following example shows the format of the `SubscriptionUpdateAttributes` object for Slack for type as `direct_message`.
+
+
+      ```json
+      {
+         "channels": [{"id": "D01CFDTYBH", "operation": "add"}, {"id": "D01GHUTYBH", "operation": "remove"}],
+         "template_id_notification": "a59f6e38-7a48-xxxx-b665-3724axx58b13",
+      }
+      ```   
 
    - The following example shows the format of the `SubscriptionUpdateAttributes` object for Service Now.
 
@@ -2696,6 +2732,7 @@ The following example shows the format of the NotificationCreate object.
   "ibmensubject" : "exampleString",
   "ibmentemplates" : "exampleString",
   "ibmenmailto" : "exampleString",
+  "ibmenslackto": "[\"sgjhgsjaS\",\"agjhgsjaS\"]",
   "ibmensmsto" : "exampleString",
   "ibmenmms": {"content": "VBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO","content_type": "image/png"},
   "ibmenhtmlbody" : "exampleString",
@@ -2735,7 +2772,7 @@ The following example shows the format of the NotificationCreate object.
 ```sh
 ibmcloud event-notifications send-notifications \
     --instance-id=exampleString \
-    --body='{"specversion": "1.0", "time": "2019-01-01T12:00:00.000Z", "id": "exampleString", "source": "exampleString", "type": "exampleString", "ibmenseverity": "exampleString", "ibmensourceid": "exampleString", "ibmendefaultshort": "exampleString", "ibmendefaultlong": "exampleString", "ibmensubject": "exampleString", "ibmentemplates": "exampleString", "ibmenmailto": "exampleString", "ibmensmsto": "exampleString","ibmenmms": "{\"content\": \"VBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO\",\"content_type\": \"image/png\"}", "ibmenhtmlbody": "exampleString", "subject": "exampleString", "data": {"anyKey": "anyValue"}, "datacontenttype": "application/json", "ibmenpushto": "{\"fcm_devices\": [\"exampleString\"], \"apns_devices\": [\"exampleString\"], \"huawei_devices\": [\"exampleString\"], \"safari_devices\": [\"exampleString\"], \"chrome_devices\": [\"exampleString\"], \"firefox_devices\": [\"exampleString\"], \"user_ids\": [\"exampleString\"], \"tags\": [\"exampleString\"], \"platforms\": [\"push_android\"]}", "ibmenfcmbody": "{}", "ibmenapnsbody": "{}", "ibmenapnsheaders": "{}", "ibmenchromebody": "{}", "ibmenchromeheaders": "{}", "ibmenfirefoxbody": "{}", "ibmenfirefoxheaders": "{}", "ibmenhuaweibody": "{}", "ibmensafaribody": "{}"}'
+    --body='{"specversion": "1.0", "time": "2019-01-01T12:00:00.000Z", "id": "exampleString", "source": "exampleString", "type": "exampleString", "ibmenseverity": "exampleString", "ibmensourceid": "exampleString", "ibmendefaultshort": "exampleString", "ibmendefaultlong": "exampleString", "ibmensubject": "exampleString", "ibmentemplates": "exampleString", "ibmenmailto": "exampleString","ibmenslackto": "[\"sgjhgsjaS\",\"agjhgsjaS\"]", "ibmensmsto": "exampleString","ibmenmms": "{\"content\": \"VBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO\",\"content_type\": \"image/png\"}", "ibmenhtmlbody": "exampleString", "subject": "exampleString", "data": {"anyKey": "anyValue"}, "datacontenttype": "application/json", "ibmenpushto": "{\"fcm_devices\": [\"exampleString\"], \"apns_devices\": [\"exampleString\"], \"huawei_devices\": [\"exampleString\"], \"safari_devices\": [\"exampleString\"], \"chrome_devices\": [\"exampleString\"], \"firefox_devices\": [\"exampleString\"], \"user_ids\": [\"exampleString\"], \"tags\": [\"exampleString\"], \"platforms\": [\"push_android\"]}", "ibmenfcmbody": "{}", "ibmenapnsbody": "{}", "ibmenapnsheaders": "{}", "ibmenchromebody": "{}", "ibmenchromeheaders": "{}", "ibmenfirefoxbody": "{}", "ibmenfirefoxheaders": "{}", "ibmenhuaweibody": "{}", "ibmensafaribody": "{}"}'
 ```
 {: pre}
 
