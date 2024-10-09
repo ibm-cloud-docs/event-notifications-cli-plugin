@@ -2801,7 +2801,7 @@ ibmcloud event-notifications send-notifications \
 | `apns_thread_id` | string | An app-specific identifier for grouping related notifications. This value corresponds to the threadIdentifier property in the UNNotificationContent object. |
 | `apns_group_summary_arg` | string | The string the notification adds to the category’s summary format string. |
 | `apns_group_summary_arg_count` | integer | The number of items the notification adds to the category’s summary format string. |
-{: caption="Table 1. iOS platform settings" caption-side="bottom"}
+{: caption="iOS platform settings" caption-side="bottom"}
 
 #### Additional properties that can be configured for the FCM notification
 {: #en-cli-send-notifications-command-addprops-fcm}
@@ -2828,4 +2828,4 @@ ibmcloud event-notifications send-notifications \
 | `title` | string | Specifies the title of the notification. The title is displayed when the notification is expanded. Title must be specified for all three expandable notifications. |
 | `type` | string | Allowed values: DEFAULT, SILENT. |
 | `alert` | string | The alert value of Notification. |
-{: caption="Table 2. Android platform settings" caption-side="bottom"}
+{: caption="Android platform settings" caption-side="bottom"}
