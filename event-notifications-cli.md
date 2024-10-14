@@ -66,7 +66,6 @@ ibmcloud event-notifications init [--instance-id INSTANCE-ID]
    The maximum length is `36` characters. The minimum length is `36` characters. The value must match regular expression `/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]/`.
 
 ### ibmcloud event-notifications environment variables set
-
 {: #en-cli-environment-variables}
 
 Sets the region that you'll be working on. The default endpoint region is Dallas. For other regions, change the endpoint by using the export command to set the variable, for example, use the following command for Sydney:
