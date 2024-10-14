@@ -67,10 +67,10 @@ ibmcloud event-notifications init [--instance-id INSTANCE-ID]
 
 ### ibmcloud event-notifications environment variables set
 
+{: #en-cli-environment-variables}
+
 Sets the region that you'll be working on. The default endpoint region is Dallas. For other regions, change the endpoint by using the export command to set the variable, for example, use the following command for Sydney:
 export IBMCLOUD_EN_ENDPOINT=https://au-syd.event-notifications.cloud.ibm.com/event-notifications
-
-{: #en-cli-environment-variables}
 
 - export **IBMCLOUD_EN_ENDPOINT** variable to set the {{site.data.keyword.en_short}} region public endpoint.
 
@@ -124,7 +124,7 @@ ibmcloud event-notifications source --help
    ```
    [From version 1.0.0]
    ```sh
-   ibmcloud event-notifications source-create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
+   ibmcloud event-notifications sources-create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
    ```
    {: pre}
 
