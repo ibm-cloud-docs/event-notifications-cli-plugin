@@ -68,6 +68,9 @@ ibmcloud event-notifications init [--instance-id INSTANCE-ID]
 ### ibmcloud event-notifications environment variables set
 {: #en-cli-environment-variables}
 
+Sets the region that you'll be working on. The default endpoint region is Dallas. For other regions, change the endpoint by using the export command to set the variable, for example, use the following command for Sydney:
+export IBMCLOUD_EN_ENDPOINT=https://au-syd.event-notifications.cloud.ibm.com/event-notifications
+
 - export **IBMCLOUD_EN_ENDPOINT** variable to set the {{site.data.keyword.en_short}} region public endpoint.
 
    - **Dallas:** `https://us-south.event-notifications.cloud.ibm.com/event-notifications`
@@ -120,7 +123,7 @@ ibmcloud event-notifications source --help
    ```
    [From version 1.0.0]
    ```sh
-   ibmcloud event-notifications source-create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
+   ibmcloud event-notifications sources-create --instance-id INSTANCE-ID --name NAME --description DESCRIPTION [--enabled ENABLED]
    ```
    {: pre}
 
@@ -1232,8 +1235,8 @@ ibmcloud event-notifications subscription --help
 
       ```json
       {
-         "add_notification_payload" : true,
-         "signing_enabled" : true
+         "signing_enabled" : true,
+         "template_id_notification": "a59f6e38-7a48-xxxx-b665-3724axx58b13"
       }
       ```
 
@@ -1270,7 +1273,7 @@ ibmcloud event-notifications subscription --help
 
    ```json
    {
-      "channels" : [{ "id": "GHIUIFJHGGH"},{"id": "TSFDIDFOFNF"}]
+      "channels" : [{ "id": "GHIUIFJHGGH"},{"id": "TSFDIDFOFNF"}],
       "template_id_notification": "a59f6e38-7a48-xxxx-b665-3724axx58b13",
    }
    ```
@@ -1883,7 +1886,7 @@ ibmcloud event-notifications template-create --instance-id INSTANCE-ID --name NA
 #### Examples
 {: #event-notifications-template-create-examples}
 
-- The following example shows the format of the `TemplateConfig` object for Email.
+- The following example shows the format of the `TemplateConfig` object for Email. The supported type is `smtp_custom.notification|smtp_custom.invitation`
 
 ```sh
 ibmcloud event-notifications template-create \
@@ -1894,7 +1897,18 @@ ibmcloud event-notifications template-create \
     --description exampleString
 ```
 
-- The following example shows the format of the `TemplateConfig` object for Slack.
+- The following example shows the format of the `TemplateConfig` object for Slack. The supported type is `slack.notification`.
+
+```sh
+ibmcloud event-notifications template-create \
+    --instance-id exampleString \
+    --name exampleString \
+    --type exampleString \
+    --params '{"body": "ewoJImJsb2NrcyI6IFsKCQl7CgkJCSJ0eXBlIjogInNlY3Rpb24iLAoJCQkidGV4dCI6IHsKCQkJCSJ0eXBlIjogIm1ya2R3biIsCgkJCQkidGV4dCI6ICJOZXcgUGFpZCBUaW1lIE9mZiByZXF1ZXN0IGZyb20gPGV4YW1wbGUuY29tfEZyZWQgRW5yaXF1ZXo+XG5cbjxodHRwczovL2V4YW1wbGUuY29tfFZpZXcgcmVxdWVzdD4iCgkJCX0KCQl9CgldCn0="}' \
+    --description exampleString
+```
+
+- The following example shows the format of the `TemplateConfig` object for Webhook. The supported type is `webhook.notification`
 
 ```sh
 ibmcloud event-notifications template-create \
@@ -2730,7 +2744,7 @@ The following example shows the format of the NotificationCreate object.
   "ibmendefaultshort" : "exampleString",
   "ibmendefaultlong" : "exampleString",
   "ibmensubject" : "exampleString",
-  "ibmentemplates" : "exampleString",
+  "ibmentemplates" : "[\"886f8f4c-8605-47hb-85a1-8682b9377468483\"]",
   "ibmenmailto" : "exampleString",
   "ibmenslackto": "[\"sgjhgsjaS\",\"agjhgsjaS\"]",
   "ibmensmsto" : "exampleString",
@@ -2772,7 +2786,7 @@ The following example shows the format of the NotificationCreate object.
 ```sh
 ibmcloud event-notifications send-notifications \
     --instance-id=exampleString \
-    --body='{"specversion": "1.0", "time": "2019-01-01T12:00:00.000Z", "id": "exampleString", "source": "exampleString", "type": "exampleString", "ibmenseverity": "exampleString", "ibmensourceid": "exampleString", "ibmendefaultshort": "exampleString", "ibmendefaultlong": "exampleString", "ibmensubject": "exampleString", "ibmentemplates": "exampleString", "ibmenmailto": "exampleString","ibmenslackto": "[\"sgjhgsjaS\",\"agjhgsjaS\"]", "ibmensmsto": "exampleString","ibmenmms": "{\"content\": \"VBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO\",\"content_type\": \"image/png\"}", "ibmenhtmlbody": "exampleString", "subject": "exampleString", "data": {"anyKey": "anyValue"}, "datacontenttype": "application/json", "ibmenpushto": "{\"fcm_devices\": [\"exampleString\"], \"apns_devices\": [\"exampleString\"], \"huawei_devices\": [\"exampleString\"], \"safari_devices\": [\"exampleString\"], \"chrome_devices\": [\"exampleString\"], \"firefox_devices\": [\"exampleString\"], \"user_ids\": [\"exampleString\"], \"tags\": [\"exampleString\"], \"platforms\": [\"push_android\"]}", "ibmenfcmbody": "{}", "ibmenapnsbody": "{}", "ibmenapnsheaders": "{}", "ibmenchromebody": "{}", "ibmenchromeheaders": "{}", "ibmenfirefoxbody": "{}", "ibmenfirefoxheaders": "{}", "ibmenhuaweibody": "{}", "ibmensafaribody": "{}"}'
+    --body='{"specversion": "1.0", "time": "2019-01-01T12:00:00.000Z", "id": "exampleString", "source": "exampleString", "type": "exampleString", "ibmenseverity": "exampleString", "ibmensourceid": "exampleString", "ibmendefaultshort": "exampleString", "ibmendefaultlong": "exampleString", "ibmensubject": "exampleString", "ibmentemplates": [\"template-id\"], "ibmenmailto": "exampleString","ibmenslackto": "[\"sgjhgsjaS\",\"agjhgsjaS\"]", "ibmensmsto": "exampleString","ibmenmms": "{\"content\": \"VBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO\",\"content_type\": \"image/png\"}", "ibmenhtmlbody": "exampleString", "subject": "exampleString", "data": {"anyKey": "anyValue"}, "datacontenttype": "application/json", "ibmenpushto": "{\"fcm_devices\": [\"exampleString\"], \"apns_devices\": [\"exampleString\"], \"huawei_devices\": [\"exampleString\"], \"safari_devices\": [\"exampleString\"], \"chrome_devices\": [\"exampleString\"], \"firefox_devices\": [\"exampleString\"], \"user_ids\": [\"exampleString\"], \"tags\": [\"exampleString\"], \"platforms\": [\"push_android\"]}", "ibmenfcmbody": "{}", "ibmenapnsbody": "{}", "ibmenapnsheaders": "{}", "ibmenchromebody": "{}", "ibmenchromeheaders": "{}", "ibmenfirefoxbody": "{}", "ibmenfirefoxheaders": "{}", "ibmenhuaweibody": "{}", "ibmensafaribody": "{}"}'
 ```
 {: pre}
 
@@ -2801,7 +2815,7 @@ ibmcloud event-notifications send-notifications \
 | `apns_thread_id` | string | An app-specific identifier for grouping related notifications. This value corresponds to the threadIdentifier property in the UNNotificationContent object. |
 | `apns_group_summary_arg` | string | The string the notification adds to the category’s summary format string. |
 | `apns_group_summary_arg_count` | integer | The number of items the notification adds to the category’s summary format string. |
-{: caption="Table 1. iOS platform settings" caption-side="bottom"}
+{: caption="iOS platform settings" caption-side="bottom"}
 
 #### Additional properties that can be configured for the FCM notification
 {: #en-cli-send-notifications-command-addprops-fcm}
@@ -2828,4 +2842,4 @@ ibmcloud event-notifications send-notifications \
 | `title` | string | Specifies the title of the notification. The title is displayed when the notification is expanded. Title must be specified for all three expandable notifications. |
 | `type` | string | Allowed values: DEFAULT, SILENT. |
 | `alert` | string | The alert value of Notification. |
-{: caption="Table 2. Android platform settings" caption-side="bottom"}
+{: caption="Android platform settings" caption-side="bottom"}
